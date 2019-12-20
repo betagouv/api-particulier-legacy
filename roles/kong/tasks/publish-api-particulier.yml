@@ -1,0 +1,140 @@
+- name: delete ssl configuration
+  shell: >
+    sleep 5;
+    curl -i -X DELETE \
+      --url http://localhost:8001/snis/{{ api_particulier_server_name }}
+
+- name: configure ssl
+  shell: >
+    curl -i -X POST \
+      --url http://localhost:8001/certificates \
+      -F "snis={{ api_particulier_server_name }}" \
+      -F "cert=@/etc/letsencrypt/live/{{ api_particulier_server_name }}/fullchain.pem" \
+      -F "key=@/etc/letsencrypt/live/{{ api_particulier_server_name }}/privkey.pem" \
+
+- name: cron job in order to renew api-particulier certificate
+  cron:
+    name: "updates kong cert"
+    minute: 0
+    hour: 0
+    job: curl -i -X DELETE --url http://localhost:8001/snis/{{ api_particulier_server_name }} && curl -i -X POST --url http://localhost:8001/certificates -F "snis={{ api_particulier_server_name }}" -F "cert=@/etc/letsencrypt/live/{{ api_particulier_server_name }}/fullchain.pem" -F "key=@/etc/letsencrypt/live/{{ api_particulier_server_name }}/privkey.pem"
+
+- name: delete previous home from kong
+  shell: >
+    curl -i -X DELETE http://localhost:8001/apis/home
+
+- name: add home to kong
+  shell: >
+    curl -i -X POST \
+      --url http://localhost:8001/apis/ \
+      -d 'name=home' \
+      -d 'hosts={{ api_particulier_server_name }}' \
+      -d 'upstream_url=https://betagouv.github.io/api-particulier-web/' \
+
+- name: delete previous admin from kong
+  shell: >
+    curl -i -X DELETE http://localhost:8001/apis/admin
+
+- name: add admin to kong
+  shell: >
+    curl -i -X POST \
+      --url http://localhost:8001/apis/ \
+      -d 'name=admin' \
+      -d 'hosts={{ api_particulier_server_name }}' \
+      -d 'upstream_url=http://localhost:7000/admin' \
+      -d 'preserve_host=true' \
+      -d 'uris=/admin' \
+
+- name: delete upstream api
+  shell: >
+    curl -i -X DELETE http://localhost:8001/upstreams/api
+
+- name: add api upstream
+  shell: >
+    curl -i -X POST \
+      --url http://localhost:8001/upstreams/ \
+      -d 'name=api' \
+      -d 'slots=100' \
+
+- name: add targets to api upstream
+  shell: >
+    curl -i -X POST \
+      --url http://localhost:8001/upstreams/api/targets \
+      -d 'target={{ lookup('dig', item) }}:4443' \
+      -d 'weight={{ 100 / (groups.apps | length) }}' \
+  with_items: "{{ groups.apps }}"
+
+- name: delete previous introspect from kong
+  shell: >
+    curl -i -X DELETE http://localhost:8001/apis/introspect
+
+- name: add introspect to kong
+  shell: >
+    curl -i -X POST \
+      --url http://localhost:8001/apis/ \
+      -d 'name=introspect' \
+      -d 'hosts={{ api_particulier_server_name }}' \
+      -d 'upstream_url=http://localhost:7000/api/auth/authorize' \
+      -d 'preserve_host=true' \
+      -d 'uris=/api/introspect' \
+      -d 'strip_uri=true' \
+      -d "https_only=false"
+
+- name: delete previous api-particulier from kong
+  shell: >
+    curl -i -X DELETE http://localhost:8001/apis/api-particulier
+
+- name: add api-particulier to kong
+  shell: >
+    curl -i -X POST \
+      --url http://localhost:8001/apis/ \
+      -d 'name=api-particulier' \
+      -d 'hosts={{ api_particulier_server_name }}' \
+      -d 'upstream_url=https://api' \
+      -d 'preserve_host=true' \
+      -d 'uris=/api' \
+      -d 'strip_uri=false' \
+      -d "https_only=true"
+
+- name: ip-restriction plugin for api-particulier
+  shell: >
+    curl -X POST http://localhost:8001/apis/{{item}}/plugins \
+        --data "name=ip-restriction"  \
+        --data "config.whitelist={{ ip_restriction.whitelist | join(',') }}"
+  when: ip_restriction is defined
+  with_items:
+    - api-particulier
+    - introspect
+
+- name: rate-limiting plugin for api-particulier
+  shell: >
+    curl -X POST http://localhost:8001/apis/{{item}}/plugins \
+      --data "name=rate-limiting"  \
+      --data "config.second=20"
+  with_items:
+    - api-particulier
+    - introspect
+
+- name: cors plugin for api particulier
+  shell: >
+    curl -X POST http://localhost:8001/apis/{{item}}/plugins/ \
+       --data "name=cors"  \
+       --data "config.origins=*" \
+       --data "config.methods=GET" \
+       --data "config.headers=Accept, Content-Length, Content-Type, X-API-Key, X-User" \
+       --data "config.exposed_headers=X-API-Key" \
+       --data "config.credentials=true" \
+       --data "config.max_age=3600"
+  when: enable_cors is defined
+  with_items:
+    - api-particulier
+    - introspect
+
+- name: custom-auth plugin for api particulier
+  shell: >
+    curl -XPOST http://localhost:8001/apis/api-particulier/plugins/ \
+      -d "name=customAuth" \
+      -d "config.authorize_scheme=http" \
+      -d "config.authorize_host=localhost:{{ particulier_auth_api_port }}" \
+      -d "config.authorize_path=/api/auth/authorize" \
+      -d "config.skipped_paths=/api/ping,/api/impots/ping,/api/caf/ping"

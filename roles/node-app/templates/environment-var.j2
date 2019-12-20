@@ -1,0 +1,27 @@
+NODE_ENV=production
+PORT={{ port }}
+ACCESS_LOG_PATH={{ access_log_path }}
+{% if https_accept_unauthorized is defined and https_accept_unauthorized %}
+NODE_TLS_REJECT_UNAUTHORIZED=0
+{% endif %}
+{% if api_particulier_server_name is defined %}
+API_PARTICULIER_SERVER_NAME={{api_particulier_server_name}}
+{% endif %}
+{% if oauth_host is defined %}
+OAUTH_HOST={{oauth_host}}
+{% endif %}
+{% if oauth_client_id is defined %}
+OAUTH_CLIENT_ID={{oauth_client_id}}
+{% endif %}
+{% if oauth_client_secret is defined %}
+OAUTH_CLIENT_SECRET={{oauth_client_secret}}
+{% endif %}
+{% if session_secret is defined %}
+SESSION_SECRET={{session_secret}}
+{% endif %}
+{% if hashed_signup_api_key is defined %}
+HASHED_SIGNUP_API_KEY={{hashed_signup_api_key}}
+{% endif %}
+{% if signup_host is defined %}
+SIGNUP_HOST={{ signup_host }}
+{% endif %}

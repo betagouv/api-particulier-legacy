@@ -1,0 +1,8 @@
+https_accept_unauthorized: True
+oauth_host: https://auth-development.api.gouv.fr
+oauth_client_id: dc1328d666cefc1f0ca9b14d6cde82d03f24a64ed9a0aeb861ccc200aba505f9
+oauth_client_secret: e82cd22f5941761e05cec47010254f39f1315ccd06c0bf8bf7527255d5d88412
+session_secret: eev4Xeuna3japhuew2niah7pheich0Oujee0Eim5Aghaet8wuug6aqu9Deek5fee
+hashed_signup_api_key: '$2a$10$da1u/BrW.iyLMu44qFfHueXYsPVMG6phpC/zU2T53XGnElErnYAyG'
+signup_host: https://signup-development.api.gouv.fr
+kong_user_password: b0NPWz6BG9JevQntq7n6YVIEjqbZE6

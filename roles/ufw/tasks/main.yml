@@ -1,0 +1,16 @@
+- name: reset ufw
+  ufw:
+    state: reset
+
+- name : Enable UFW and close all ports
+  ufw: state=enabled policy=deny
+
+- name : allow all access to allowed tcp
+  ufw: rule=allow port={{item}} proto=tcp
+  with_items: "{{ ufw_allowed_port }}"
+  tags: ufw
+
+- name : Allow all access to kong for apps
+  ufw: rule=allow from={{ lookup('dig', item) }} proto=tcp port=4443
+  tags: ufw
+  with_items: "{{ groups.gateway }}"

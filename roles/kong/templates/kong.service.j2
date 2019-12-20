@@ -1,0 +1,19 @@
+[Unit]
+Description=Kong Gateway
+After=network-online.target
+
+[Service]
+Type=forking
+
+User=root
+Group=root
+
+Environment=PERL_BADLANG=0
+ExecStart=/usr/local/bin/kong start --vv --nginx-conf /etc/kong/nginx_kong.lua
+ExecStop=/usr/local/bin/kong stop --vv
+
+Restart=on-failure
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target

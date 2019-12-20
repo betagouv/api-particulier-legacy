@@ -1,0 +1,7 @@
+kong_dashboard_port: 8080
+kong_plugins:
+  - name: delegateAuth
+    version: master
+kong_users:
+  - name: api-particulier
+    password: "{{ kong_user_password }}"

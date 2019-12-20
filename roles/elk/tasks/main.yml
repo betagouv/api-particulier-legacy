@@ -1,0 +1,94 @@
+- name: install pexpect
+  apt:
+    name: python-pexpect
+    update_cache: true
+
+- name: install requirements
+  apt:
+    name: unzip
+
+- name: install kibana
+  apt:
+    name: kibana
+    state: latest
+
+- name: load kibana dashboards
+  shell: >
+    cd /tmp;
+    curl -L -O https://download.elastic.co/beats/dashboards/beats-dashboards-1.1.0.zip;
+    unzip beats-dashboards-*.zip;
+    cd beats-dashboards-*
+    ./load.sh
+
+- name: configure kibana
+  template:
+    src: kibana.yml.j2
+    dest: /etc/kibana/kibana.yml
+
+- name: restart kibana
+  service:
+    name: kibana
+    state: restarted
+
+- name: enable kibana
+  service:
+    name: kibana
+    enabled: yes
+    state: started
+
+- name: install logstash
+  apt:
+    name: logstash
+    state: latest
+
+- name: configure logstash
+  template:
+    owner: root
+    group: root
+    mode: 0664
+    src: logstash-beats.conf.j2
+    dest: /etc/logstash/conf.d/beats.conf
+
+- name: restart logstash
+  service:
+    name: logstash
+    state: restarted
+
+- name: enable logstash
+  service:
+    name: logstash
+    enabled: yes
+    state: started
+
+- name: load filebeats index template to elastic
+  shell: |
+    sleep 10;
+    cd /tmp;
+    curl -O https://gist.githubusercontent.com/thisismitch/3429023e8438cc25b86c/raw/d8c479e2a1adcea8b1fe86570e42abab0f10f364/filebeat-index-template.json;
+    curl -XPUT 'http://localhost:9200/_template/filebeat?pretty' -d@filebeat-index-template.json;
+
+- name: create logstash writer role
+  expect:
+    command: >
+      curl -X POST -d '{
+        "cluster": ["manage_index_templates", "monitor"],
+        "indices": [
+          {
+            "names": [ "logstash-*" ],
+            "privileges": ["write","delete","create_index"]
+          }
+        ]
+      }' http://localhost:9200/_xpack/security/role/logstash_writer
+    responses:
+      (?i)password: changeme
+
+- name: create logstash writer user
+  expect:
+    command: >
+      curl -X POST -d '{
+          "password" : "changeme",
+          "roles" : [ "logstash_writer"],
+          "full_name" : "Internal Logstash User"
+        }' http://localhost:9200/_xpack/security/user/logstash_internal
+    responses:
+      (?i)password: changeme

@@ -1,0 +1,73 @@
+---
+- hosts: all
+  become: true
+  roles:
+    - role: team-ssh-keys
+      tags: team-ssh-keys
+
+- hosts: gateway
+  become: true
+  roles:
+    - role: node-app
+      app_service_name: api-particulier-auth
+      port: "{{ particulier_auth_api_port }}"
+      tags: api-particulier-auth
+    - nginx
+    - role: self-signed-certificate
+      server_name: "{{ api_particulier_server_name }}"
+      when: "ssl_strategy == 'self-signed'"
+    - role: ansible-letsencrypt
+      letsencrypt_email: monitoring@particulier.api.gouv.fr
+      letsencrypt_cert_domains:
+        - "{{ api_particulier_server_name }}"
+      letsencrypt_renewal_command_args: '--renew-hook "systemctl restart kong"'
+      when: "ssl_strategy == 'certbot'"
+    - role: kong
+      tags: kong
+    - role: mongodb
+      tags: mongodb
+
+- hosts: apps
+  become: true
+  roles:
+    - role: api-particulier
+      tags: api-particulier
+    - role: ips-load-balancing
+      tags: ips-load-balancing
+      # This role cause nfs file sync error on reboot
+      # You can remove the development condition if you do not use the nfs file sync
+      when: "api_particulier_environment != 'development' and load_balancing_ips is defined"
+
+- hosts: svair_mock
+  become: true
+  roles:
+    - role: svair-mock
+      tags: svair-mock
+
+- hosts: all:!monitoring
+  become: true
+  roles:
+    - ufw
+    - role: filebeat
+      when: "groups['monitoring'] is defined"
+
+- hosts: monitoring
+  become: true
+  roles:
+    - nginx
+    - role: self-signed-certificate
+      server_name: "{{ monitoring_server_name }}"
+      when: "ssl_strategy == 'self-signed'"
+    - role: ansible-letsencrypt
+      letsencrypt_email: monitoring@particulier.api.gouv.fr
+      letsencrypt_cert_domains:
+        - "{{ monitoring_server_name }}"
+      letsencrypt_renewal_command_args: '--renew-hook "systemctl restart nginx"'
+      when: "ssl_strategy == 'certbot'"
+    - role: node-app
+      app_service_name: api-stats-elk
+      port: 3004
+      tags: api-stats-elk
+    - monitoring-nginx
+    - role: elk
+      tags: elk
