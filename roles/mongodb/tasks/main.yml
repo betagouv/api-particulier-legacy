@@ -1,0 +1,25 @@
+- name: install mongodb package
+  apt:
+    name: mongodb
+    update_cache: yes
+
+- name: enable mongod services
+  systemd:
+    name: mongodb
+    enabled: true
+    state: started
+
+- name: install pip
+  apt:
+    name: python-pip
+
+- name: install pymongo
+  pip:
+    name: pymongo==3.7.2
+
+- name: configure mongodb
+  template:
+    src: mongodb.conf.j2
+    dest: /etc/mongodb.conf
+  notify:
+  - restart mongod

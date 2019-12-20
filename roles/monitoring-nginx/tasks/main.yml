@@ -1,0 +1,16 @@
+- name: install apache2 utils
+  apt:
+    name: apache2-utils
+    update_cache: true
+
+- name: set authorized nginx users
+  shell: >
+    htpasswd -b -c /etc/nginx/htpasswd.users {{ item.name }} {{ item.password }}
+  with_items: "{{ elk_users }}"
+
+- name: configure nginx to serve kibana
+  template:
+    src: monitoring.conf.j2
+    dest: "/etc/nginx/sites-enabled/elk"
+  notify:
+  - restart nginx

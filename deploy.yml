@@ -1,0 +1,32 @@
+---
+- hosts: apps
+  become: true
+  tasks:
+  - name: deploying api-particulier
+    script: ./scripts/deploy.sh api-particulier
+    tags:
+    - api-particulier
+
+- hosts: gateway
+  become: true
+  tasks:
+  - name: deploying api-particulier-auth
+    script: ./scripts/deploy.sh api-particulier-auth
+    tags:
+    - api-particulier-auth
+
+- hosts: svair_mock
+  become: true
+  tasks:
+  - name: deploying svair-mock
+    script: ./scripts/deploy.sh svair-mock
+    tags:
+    - svair-mock
+
+- hosts: monitoring
+  become: true
+  tasks:
+  - name: deploying api-stats-elk
+    script: ./scripts/deploy.sh api-stats-elk
+    tags:
+    - api-stats-elk

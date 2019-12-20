@@ -1,0 +1,19 @@
+[Unit]
+Description=API Particulier Open API
+After=network-online.target
+
+[Service]
+Type=simple
+
+User={{ app_user }}
+Group={{ app_user }}
+
+EnvironmentFile=/etc/api-particulier/api-particulier.conf
+ExecStart=/usr/bin/node /opt/apps/api-particulier/current/bin/www
+
+Restart=on-failure
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target
+

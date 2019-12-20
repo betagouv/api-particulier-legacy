@@ -1,0 +1,5 @@
+- name: restart kong service
+  systemd:
+    name:  kong
+    state: restarted
+  listen: "restart web services"

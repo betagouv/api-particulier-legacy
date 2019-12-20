@@ -1,0 +1,19 @@
+LOG_FORMAT=bunyan
+PORT={{ api_particulier_port }}
+port={{ api_particulier_port }}
+nbWorkers={{ api_particulier_nb_workers }}
+outgoingHttpMaxSockets={{ api_particulier_max_sockets }}
+numeroFiscal={{ api_particulier_impots_numero_fiscal }}
+referenceAvis={{ api_particulier_impots_reference_avis }}
+svairHost={{ api_particulier_svair_host }}
+{% if api_particulier_caf_stub %}
+cafStub=true
+{% else %}
+cafHost={{ api_particulier_caf_host }}
+cafSslCertificate=/etc/api-particulier/ssl/particulier-caf.bundle.crt
+cafSslKey=/etc/api-particulier/ssl/particulier-caf.key
+{% endif %}
+numeroAllocataire={{ api_particulier_caf_numero_allocataire }}
+codePostal={{ api_particulier_caf_code_postal }}
+
+mongoDbUrl='mongodb://localhost:27017/api-particulier'

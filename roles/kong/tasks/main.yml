@@ -1,0 +1,91 @@
+---
+- name: install dependencies
+  apt:
+    name: "{{ item }}"
+    update_cache: true
+  with_items:
+    - openssl
+    - libpcre3
+    - procps
+    - perl
+
+- name: get and install Kong package
+  apt:
+    deb: https://github.com/Mashape/kong/releases/download/0.10.3/kong-0.10.3.xenial_all.deb
+
+- include: database.yml
+
+- name: configure kong
+  template:
+    src: kong.conf.j2
+    dest: /etc/kong/kong.conf
+
+- name: unarchive kong plugin
+  unarchive:
+    copy: no
+    src: "https://github.com/pknoth/kong-{{ item.name }}/archive/{{ item.version }}.tar.gz"
+    dest: /root
+  with_items: "{{ kong_plugins }}"
+  # With vagrant the plugin is synced via nfs from host
+  when: "api_particulier_environment != 'development'"
+
+- name: install kong plugins
+  shell: |
+    cd /root/kong-{{ item.name }}-{{ item.version }}
+    luarocks make
+  with_items: "{{ kong_plugins }}"
+
+- name: install apache2 utils
+  apt:
+    name: apache2-utils
+    update_cache: true
+
+- name: set authorized nginx users
+  shell: >
+    htpasswd -b -c /etc/nginx/htpasswd.users {{ item.name }} {{ item.password }}
+  with_items: "{{ kong_users }}"
+
+- name: configure kong nginx
+  template:
+    owner: root
+    group: root
+    mode: 0644
+    src: nginx_kong.lua.j2
+    dest: /etc/kong/nginx_kong.lua
+
+- name: create systemd service for Kong
+  template:
+    owner: root
+    group: root
+    mode: 0644
+    src: kong.service.j2
+    dest: /etc/systemd/system/kong.service
+
+- name: enable kong service
+  systemd:
+    name:  kong
+    enabled: yes
+    daemon_reload: yes
+    state: restarted
+
+- name: install kong-dashboard
+  shell: |
+    npm install -g kong-dashboard
+
+- name: create kong-dashboard service
+  template:
+    owner: root
+    group: root
+    mode: 0644
+    src: kong-dashboard.service.j2
+    dest: /etc/systemd/system/kong-dashboard.service
+
+- name: enable kong-dashboard service
+  systemd:
+    name:  kong-dashboard
+    enabled: yes
+    daemon_reload: yes
+    state: restarted
+
+- include: publish-api-particulier.yml
+  tags: publish-api-particulier
