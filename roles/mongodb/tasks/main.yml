@@ -22,4 +22,4 @@
     src: mongodb.conf.j2
     dest: /etc/mongodb.conf
   notify:
-  - restart mongod
+    - restart mongodb
