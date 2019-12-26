@@ -133,13 +133,27 @@ exit
 
 To test that the installation went OK, we will now create a token and test it.
 
-Token are created with signup.
+Token object are created with signup via an API call on api-particulier-auth.
 
-> TODO create a curl script to create token manually.
+To simulate this API call run the following curl command:
 
-> TODO create a test instance of auth.api.gouv.fr to enable token generation with the following instruction
+```bash
+curl -k -X POST \
+  https://particulier-development.api.gouv.fr/admin/api/token \
+  -H 'x-api-key: 4KpfbPeOI00ckHALqlyxR0z5xaKDCZMTareFTR462cgKJrf43EVnkxEJxeWmNSLM' \
+  -H 'cache-control: no-cache' \
+  -H 'content-type: application/json' \
+  -d '{
+	"name": "MAIRIE DE PARIS - 100",
+	"email": "mairie-de-paris@yopmail.com",
+	"signup_id": "100",
+        "scopes": ["dgfip_avis_imposition", "cnaf_attestation_droits"]
+}'
+```
 
-Connect to https://particulier-development.api.gouv.fr/admin.
+Once the token object is created, you must generate an API Particulier api key in it.
+
+Connect to https://particulier-development.api.gouv.fr/admin. Use the public account: api-particulier@yopmail.com (password: api-particulier@yopmail.com).
 
 Click on the newly created token. Then click on "Generate new API Key".
 
