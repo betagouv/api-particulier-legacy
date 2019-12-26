@@ -1,5 +1,5 @@
 NODE_ENV=production
-PORT={{ port }}
+PORT={{ application_port }}
 ACCESS_LOG_PATH={{ access_log_path }}
 {% if https_accept_unauthorized is defined and https_accept_unauthorized %}
 NODE_TLS_REJECT_UNAUTHORIZED=0

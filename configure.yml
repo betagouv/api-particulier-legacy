@@ -10,7 +10,7 @@
   roles:
     - role: node-app
       app_service_name: api-particulier-auth
-      port: "{{ particulier_auth_api_port }}"
+      application_port: "{{ particulier_auth_api_port }}"
       tags: api-particulier-auth
     - nginx
     - role: self-signed-certificate
@@ -66,7 +66,7 @@
       when: "ssl_strategy == 'certbot'"
     - role: node-app
       app_service_name: api-stats-elk
-      port: 3004
+      application_port: 3004
       tags: api-stats-elk
     - monitoring-nginx
     - role: elk
