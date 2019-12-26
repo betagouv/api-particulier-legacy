@@ -17,26 +17,28 @@
     state: latest
   notify: restart elasticsearch
 
+- name: create jvm options file
+  file:
+    path: /etc/elasticsearch/jvm.options
+    state: touch
+
 - name: set java heap size (min size)
   lineinfile:
     path: /etc/elasticsearch/jvm.options
-    regexp: '^-Xms(\d+)g$'
-    line: '-Xms{{ java_heap_size_in_gigabytes }}g'
-    backrefs: yes
+    line: "-Xms{{ java_heap_size_in_gigabytes }}g"
   notify: restart elasticsearch
 
 - name: set java heap size (max size)
   lineinfile:
     path: /etc/elasticsearch/jvm.options
-    regexp: '^-Xmx(\d+)g$'
-    line: '-Xmx{{ java_heap_size_in_gigabytes }}g'
+    line: "-Xmx{{ java_heap_size_in_gigabytes }}g"
   notify: restart elasticsearch
 
 - name: set log level to info
   lineinfile:
     path: /etc/elasticsearch/log4j2.properties
-    regexp: '^logger.action.level ='
-    line: 'logger.action.level = info'
+    regexp: "^logger.action.level ="
+    line: "logger.action.level = info"
   notify: restart elasticsearch
 
 - name: ensure elasticsearch service startup at boot
