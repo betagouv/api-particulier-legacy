@@ -17,6 +17,13 @@
     state: latest
   notify: restart elasticsearch
 
+- name: Activate elasticsearch daemon
+  lineinfile:
+    path: /etc/default/elasticsearch
+    regexp: "START_DAEMON"
+    line: "START_DAEMON=true"
+    backrefs: yes
+
 - name: ensure elasticsearch service startup at boot
   service:
     name: elasticsearch
@@ -54,3 +61,8 @@
     regexp: "^logger.action.level ="
     line: "logger.action.level = info"
   notify: restart elasticsearch
+
+- name: manually restart elasticsearch
+  service:
+    name: elasticsearch
+    state: restarted
