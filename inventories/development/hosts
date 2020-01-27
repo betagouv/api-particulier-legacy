@@ -13,3 +13,9 @@ app2-development.particulier-infra.api.gouv.fr
 
 [monitoring]
 monitoring-development.particulier-infra.api.gouv.fr
+
+[development:children]
+apps
+gateway
+svair_mock
+monitoring
