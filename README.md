@@ -1,84 +1,24 @@
-# Api Particulier Ansible
+# API Particulier
 
-Dépôt Ansible pour déployer API Particulier
+French government's API providing providing citizens' individual information.
 
-## Development dependencies
+> See [official website](https://particulier.api.gouv.fr/) for more information.
 
-- VirtualBox \^5.2.10
-- Vagrant \^2.1.1
-- NFS
-- Ansible 2.5.15
-- dnspython
+## Installation
 
-## Install
+### Prerequesites
 
-### Dependencies setup
+- [VirtualBox](https://www.virtualbox.org/wiki/Downloads) >= \^5.2.10
+- [Vagrant](https://www.vagrantup.com/downloads.html) >= \^2.1.1
+- [NFS](https://doc.ubuntu-fr.org/nfs)
+- [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html) >= 2.5.15
+- [Dnspython](http://www.dnspython.org/)
 
-Install VirtualBox with apt:
+### Local provisioning
 
-```bash
-sudo apt install virtualbox virtualbox-ext-pack
-```
-
-Install Vagrant with dpkg:
-
-```bash
-wget https://releases.hashicorp.com/vagrant/2.1.1/vagrant_2.1.1_x86_64.deb
-sudo dpkg -i vagrant_2.1.1_x86_64.deb
-```
-
-Install NFS:
-
-```bash
-sudo apt install nfs-kernel-server nfs-common
-```
-
-Then reboot your machine.
-
-Install Ansible with pip:
-
-```bash
-sudo pip install ansible==2.5.15
-```
-
-Install dnspython with pip:
-
-```bash
-sudo pip install dnspython==1.15.0
-```
-
-### Api Particulier local provisioning
-
-Clone the repo:
-
-```bash
-git clone --recursive git@gitlab.incubateur.net:beta.gouv.fr/api-particulier-ansible.git
-cd api-particulier-ansible/
-git submodule foreach git fetch
-git submodule foreach git pull origin master
-git submodule foreach git checkout master
-```
-
-**If you are using macOS.**
-
-- The host's `/etc/hosts` configuration file may not take effect in the guest machines. You might need to also alter the guest machine's `/etc/hosts` after running vagrant up.
-- Change the lookup function in `roles/ufw/tasks/main.yml`
-
-```yml
-- name: Allow all access to kong for apps
-  ufw: rule=allow from=192.168.56.25 proto=tcp port=4443
-  tags: ufw
-```
-
-**End of macOS specific instructions.**
-
-Then run:
-
-```bash
-vagrant up && vagrant up monitoring
-ansible-galaxy install -r requirements.yml
-ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventories/development/hosts configure.yml
-```
+- `git clone --recursive git@github.com:betagouv/api-particulier-ansible.git`
+- `cd api-particulier-ansible`
+- `make`
 
 ### Development deployment
 
@@ -428,33 +368,4 @@ Run the configuration scripts:
 
 ```bash
 ansible-playbook -i inventories/development/hosts configure.yml
-```
-
-## Troubleshooting
-
-### If ansible dig lookup is failing (ufw: "Allow all access to kong for apps" task)
-
-Install DNSmasq to provide those in your name server
-
-```bash
-sudo apt install dnsmasq
-```
-
-check your /etc/nsswitch.conf. It should look like this :
-
-```text
-passwd:         compat
-group:          compat
-shadow:         compat
-gshadow:        files
-
-hosts:          files mdns4_minimal [NOTFOUND=return] resolve [!UNAVAIL=return] dns
-networks:       files
-
-protocols:      db files
-services:       db files
-ethers:         db files
-rpc:            db files
-
-netgroup:       nis
 ```

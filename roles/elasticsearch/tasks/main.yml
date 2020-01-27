@@ -23,6 +23,11 @@
     enabled: yes
     state: started
 
+- name: ensure jvm.options file exists
+  file:
+    path: /etc/elasticsearch/jvm.options
+    state: touch
+
 - name: set java heap size (min size)
   lineinfile:
     path: /etc/elasticsearch/jvm.options
@@ -37,6 +42,11 @@
     regexp: '^-Xmx(\d+)g$'
     line: "-Xmx{{ java_heap_size_in_gigabytes }}g"
   notify: restart elasticsearch
+
+- name: ensure log4j2.properties file exists
+  file:
+    path: /etc/elasticsearch/log4j2.properties
+    state: touch
 
 - name: set log level to info
   lineinfile:
