@@ -1,0 +1,8 @@
+.vagrant
+ansible_modules
+*.retry
+.DS_Store
+.vault*
+*.swp
+*.orig
+.idea/

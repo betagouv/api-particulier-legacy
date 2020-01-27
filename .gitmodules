@@ -1,0 +1,15 @@
+[submodule "api-particulier"]
+	path = api-particulier
+	url = git@github.com:betagouv/api-particulier.git
+[submodule "api-particulier-auth"]
+	path = api-particulier-auth
+	url = git@github.com:betagouv/api-particulier-auth.git
+[submodule "api-stats-elk"]
+	path = api-stats-elk
+	url = git@github.com:betagouv/api-stats-elk.git
+[submodule "kong-delegateAuth"]
+	path = kong-delegateAuth
+	url = git@github.com:betagouv/kong-delegateAuth.git
+[submodule "svair-mock"]
+	path = svair-mock
+	url = git@github.com:betagouv/svair-mock.git

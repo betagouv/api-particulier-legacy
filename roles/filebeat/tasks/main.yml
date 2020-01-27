@@ -1,0 +1,16 @@
+- name: install filebeat 5.5
+  apt:
+    deb: https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.5.0-amd64.deb
+
+- name: configure filebeat
+  template:
+    src: filebeat.yml.j2
+    dest: /etc/filebeat/filebeat.yml
+
+- name: restart service
+  service:
+    name: filebeat
+    state: restarted
+
+- name: start service on startup
+  shell: systemctl enable filebeat.service

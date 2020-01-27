@@ -1,0 +1,15 @@
+localhost ansible_connection=local
+
+[gateway]
+gateway-development.particulier-infra.api.gouv.fr
+
+[apps]
+app1-development.particulier-infra.api.gouv.fr
+app2-development.particulier-infra.api.gouv.fr
+
+[svair_mock]
+app1-development.particulier-infra.api.gouv.fr
+app2-development.particulier-infra.api.gouv.fr
+
+[monitoring]
+monitoring-development.particulier-infra.api.gouv.fr

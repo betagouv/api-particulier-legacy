@@ -1,0 +1,11 @@
+- name: restart networking
+  service:
+    name: networking
+    state: restarted
+
+- name: flush networking
+  shell: ifdown -v {{ main_network_interface }} && ip addr flush dev {{ main_network_interface }} && ifup -v {{ main_network_interface }}
+  notify: restart networking
+
+- name: persist iptables
+  shell: iptables-save > /etc/iptables/rules.v4

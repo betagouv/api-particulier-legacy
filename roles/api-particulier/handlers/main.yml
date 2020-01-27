@@ -1,0 +1,5 @@
+---
+- name: restart api-particulier
+  service:
+    name: api-particulier
+    state: restarted
