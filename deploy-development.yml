@@ -1,0 +1,30 @@
+---
+- hosts: apps:&development
+  serial: 1
+  roles:
+    - name: development-deploy
+      vars:
+        application_to_deploy: api-particulier
+
+- hosts: gateway:&development
+  serial: 1
+  roles:
+    - name: development-deploy
+      vars:
+        application_to_deploy: api-particulier-auth
+    - role: api-particulier-token
+      become: yes
+
+- hosts: svair_mock:&development
+  serial: 1
+  roles:
+    - name: development-deploy
+      vars:
+        application_to_deploy: svair-mock
+
+- hosts: monitoring:&development
+  serial: 1
+  roles:
+    - name: development-deploy
+      vars:
+        application_to_deploy: api-stats-elk
