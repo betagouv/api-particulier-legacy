@@ -63,6 +63,15 @@
       -d 'target={{ lookup('dig', item) }}:4443' \
       -d 'weight={{ 100 / (groups.apps | length) }}' \
   with_items: "{{ groups.apps }}"
+  when: "'development' not in group_names"
+
+- name: add targets to api upstream - dev mode
+  shell: >
+    curl -i -X POST \
+      --url http://localhost:8001/upstreams/api/targets \
+      -d 'target=192.168.56.35:4443' \
+      -d 'weight=100' \
+  when: "'development' in group_names"
 
 - name: delete previous introspect from kong
   shell: >

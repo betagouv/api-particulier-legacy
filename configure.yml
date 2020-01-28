@@ -5,14 +5,11 @@
     - role: etc-hosts
       tags: etc-hosts
 
-- hosts: all:!localhost
-  become: true
+- hosts: all:!development
+  become: yes
   roles:
-    - role: etc-hosts
-      tags: etc-hosts
     - role: team-ssh-keys
       tags: team-ssh-keys
-      when: "api_particulier_environment != 'development'"
 
 - hosts: gateway
   become: true

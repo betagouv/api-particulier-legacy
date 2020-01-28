@@ -5,7 +5,7 @@ required-dependency =                                               \
 		exit 1;                                                     \
 	fi
 
-all: update-submodules configure
+all: update-submodules configure deploy
 
 start:
 	@$(call required-dependency,vagrant,Vagrant)
@@ -21,6 +21,9 @@ prepare: ansible_modules/ansible-letsencrypt/README.md ansible_modules/ansible-r
 
 configure: prepare start start-monitoring
 	ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i inventories/development configure.yml --ask-become-pass
+
+deploy:
+	ansible-playbook -i inventories/development deploy.yml
 
 update-submodules:
 	git submodule foreach git fetch

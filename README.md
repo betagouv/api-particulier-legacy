@@ -14,97 +14,30 @@ French government's API providing providing citizens' individual information.
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/index.html) >= 2.5.15
 - [Dnspython](http://www.dnspython.org/)
 
-### Local provisioning
+### Local installation
 
 - `git clone --recursive git@github.com:betagouv/api-particulier-ansible.git`
 - `cd api-particulier-ansible`
 - `make`
 
-### Development deployment
+> **Troubleshooting:** The provisioning might fail on the "elasticsearch : set java heap size (min size)" task. If you encounter this problem, just run `make` again.
 
-Deploy the application manually.
+## Usage
 
-On the **gateway** server:
+### Postman collection
 
-```bash
-vagrant ssh gateway
-cd /opt/apps/api-particulier-auth/current
-npm i
-sudo systemctl restart api-particulier-auth
-exit
-```
+To facilitate local development, a [Postman](https://www.getpostman.com/) configuration has been generated during the installation.
 
-On the **app1** server:
+To load the Postman configuration:
 
-```bash
-vagrant ssh app1
-cd /opt/apps/api-particulier/current
-npm i
-sudo systemctl restart api-particulier
-cd /opt/apps/svair-mock/current
-npm i
-sudo systemctl restart svair-mock
-exit
-```
+- import your local version of `development/local.postman_environement.json` in Postman.
+- import `postman/api-particulier.postman_collection.json` in postman.
 
-On the **app2** server:
+You should now be able to use all the routes in the Postman collection.
 
-```bash
-vagrant ssh app2
-sudo systemctl restart api-particulier
-sudo systemctl restart svair-mock
-exit
-```
+> Note that fake data can be found [here](https://github.com/betagouv/svair-mock/blob/f2c26f70eb985b44a97d1e4bab8bdee8c0439223/data/seed.csv) and [here](https://github.com/betagouv/api-particulier/blob/1fc0a91cf07d041ce8d21f23f4288ca077b81bd6/api/caf/fake-responses.json).
 
-On the **monitoring** server:
-
-```bash
-vagrant ssh monitoring
-cd /opt/apps/api-stats-elk/current
-npm i
-sudo systemctl restart api-stats-elk
-exit
-```
-
-### Test the local installation
-
-To test that the installation went OK, we will now create a token and test it.
-
-Token object are created with signup via an API call on api-particulier-auth.
-
-To simulate this API call run the following curl command:
-
-```bash
-curl -k -X POST \
-  https://particulier-development.api.gouv.fr/admin/api/token \
-  -H 'x-api-key: 4KpfbPeOI00ckHALqlyxR0z5xaKDCZMTareFTR462cgKJrf43EVnkxEJxeWmNSLM' \
-  -H 'cache-control: no-cache' \
-  -H 'content-type: application/json' \
-  -d '{
-	"name": "MAIRIE DE PARIS - 100",
-	"email": "mairie-de-paris@yopmail.com",
-	"signup_id": "100",
-        "scopes": ["dgfip_avis_imposition", "cnaf_attestation_droits"]
-}'
-```
-
-Once the token object is created, you must generate an API Particulier api key in it.
-
-Connect to https://particulier-development.api.gouv.fr/admin. Use the public account: api-particulier@yopmail.com (password: api-particulier@yopmail.com).
-
-Then click on "Generate new API Key".
-
-At this step your API Key is displayed. Mind that this key is encrypted and can not be displayed anymore. Copy it, and replace USE_YOUR_OWN in `postman/development.postman_environement.json` with it.
-
-Import your local version of `development/local.postman_environement.json` in [postman](https://www.getpostman.com/).
-
-Import `postman/api-particulier.postman_collection.json` in postman.
-
-You should be able to retrieve data from the caf famille json route: {{dev_host}}/api/caf/famille?numeroAllocataire={{numeroAllocataire}}&codePostal={{codePostal}}
-
-Note that fake data can be found [here](https://github.com/betagouv/svair-mock/blob/f2c26f70eb985b44a97d1e4bab8bdee8c0439223/data/seed.csv) and [here](https://github.com/betagouv/api-particulier/blob/1fc0a91cf07d041ce8d21f23f4288ca077b81bd6/api/caf/fake-responses.json).
-
-### Test the local monitoring
+### Local monitoring
 
 > Note that the monitoring VM must be started explicitly with `vagrant up monitoring` and will not be started with `vagrant up`.
 > It is more convenient as it is not used quite often in development mode whereas it demands lots of RAM and CPU to run.
@@ -113,7 +46,7 @@ Go to https://monitoring.particulier-development.api.gouv.fr (credentials: octo|
 
 Create an index pattern `filebeat-*` and select `@timestamp` as `Time Filter field name`.
 
-Make an api call with postman.
+Make an api call with Postman.
 
 From now on, your request to api-particulier are logged in Kibana. You should see them in the discover section.
 
@@ -142,15 +75,7 @@ npm start
 API Particulier:
 
 ```bash
-vagrant ssh app1
-sudo systemctl stop api-particulier
-cd /opt/apps/api-particulier/current
-export $(cat /etc/api-particulier/api-particulier.conf | xargs)
-npm start
-```
-
-```bash
-vagrant ssh app2
+vagrant ssh app
 sudo systemctl stop api-particulier
 cd /opt/apps/api-particulier/current
 export $(cat /etc/api-particulier/api-particulier.conf | xargs)
@@ -160,15 +85,7 @@ npm start
 Svair mock:
 
 ```bash
-vagrant ssh app1
-sudo systemctl stop svair-mock
-cd /opt/apps/svair-mock/current
-export $(cat /etc/svair-mock/svair-mock.conf | xargs)
-npm start
-```
-
-```bash
-vagrant ssh app2
+vagrant ssh app
 sudo systemctl stop svair-mock
 cd /opt/apps/svair-mock/current
 export $(cat /etc/svair-mock/svair-mock.conf | xargs)

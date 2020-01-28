@@ -17,23 +17,11 @@
     state: latest
   notify: restart elasticsearch
 
-- name: Activate elasticsearch daemon
-  lineinfile:
-    path: /etc/default/elasticsearch
-    regexp: "START_DAEMON"
-    line: "START_DAEMON=true"
-    backrefs: yes
-
 - name: ensure elasticsearch service startup at boot
   service:
     name: elasticsearch
     enabled: yes
     state: started
-
-- name: ensure jvm.options file exists
-  file:
-    path: /etc/elasticsearch/jvm.options
-    state: touch
 
 - name: set java heap size (min size)
   lineinfile:
@@ -50,19 +38,9 @@
     line: "-Xmx{{ java_heap_size_in_gigabytes }}g"
   notify: restart elasticsearch
 
-- name: ensure log4j2.properties file exists
-  file:
-    path: /etc/elasticsearch/log4j2.properties
-    state: touch
-
 - name: set log level to info
   lineinfile:
     path: /etc/elasticsearch/log4j2.properties
     regexp: "^logger.action.level ="
     line: "logger.action.level = info"
   notify: restart elasticsearch
-
-- name: manually restart elasticsearch
-  service:
-    name: elasticsearch
-    state: restarted

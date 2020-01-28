@@ -22,11 +22,7 @@ ip_restriction:
     - 192.168.56.1
 
 load_balancing_ips:
-  app1-development.particulier-infra.api.gouv.fr:
+  app-development.particulier-infra.api.gouv.fr:
     - 192.168.56.36
     - 192.168.56.37
     - 192.168.56.38
-  app2-development.particulier-infra.api.gouv.fr:
-    - 192.168.56.46
-    - 192.168.56.47
-    - 192.168.56.48

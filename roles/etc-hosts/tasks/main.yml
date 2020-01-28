@@ -10,9 +10,7 @@
       ip: 192.168.56.25
     - hostname: gateway-development.particulier-infra.api.gouv.fr
       ip: 192.168.56.25
-    - hostname: app1-development.particulier-infra.api.gouv.fr
+    - hostname: app-development.particulier-infra.api.gouv.fr
       ip: 192.168.56.35
-    - hostname: app2-development.particulier-infra.api.gouv.fr
-      ip: 192.168.56.45
     - hostname: monitoring-development.particulier-infra.api.gouv.fr
       ip: 192.168.56.27

@@ -20,7 +20,7 @@ vms = {
           "api-particulier-auth"
         ]
     },
-  :app1 =>
+  :app =>
     {
       :ip => '192.168.56.35',
       :alternate_ips => [
@@ -30,30 +30,7 @@ vms = {
       ],
       :autostart => true,
       :memory => '1024',
-      :name => 'app1-development',
-      :forwarded_ports => [],
-      :synced_folders =>
-        [
-          {:host => "./api-particulier", :guest => "/opt/apps/api-particulier/current"},
-          {:host => "./svair-mock", :guest => "/opt/apps/svair-mock/current"},
-        ],
-      :services_to_start =>
-        [
-          "api-particulier",
-          "svair-mock"
-        ]
-    },
-  :app2 =>
-    {
-      :ip => '192.168.56.45',
-      :alternate_ips => [
-        '192.168.56.46',
-        '192.168.56.47',
-        '192.168.56.48',
-      ],
-      :autostart => true,
-      :memory => '1024',
-      :name => 'app2-development',
+      :name => 'app-development',
       :forwarded_ports => [],
       :synced_folders =>
         [
