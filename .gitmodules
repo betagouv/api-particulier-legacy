@@ -1,6 +1,3 @@
-[submodule "api-particulier"]
-	path = api-particulier
-	url = git@github.com:betagouv/api-particulier.git
 [submodule "api-particulier-auth"]
 	path = api-particulier-auth
 	url = git@github.com:betagouv/api-particulier-auth.git
