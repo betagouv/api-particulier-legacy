@@ -1,6 +1,3 @@
-[submodule "api-stats-elk"]
-	path = api-stats-elk
-	url = git@github.com:betagouv/api-stats-elk.git
 [submodule "kong-delegateAuth"]
 	path = kong-delegateAuth
 	url = git@github.com:betagouv/kong-delegateAuth.git
