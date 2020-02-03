@@ -10,6 +10,3 @@
 [submodule "kong-delegateAuth"]
 	path = kong-delegateAuth
 	url = git@github.com:betagouv/kong-delegateAuth.git
-[submodule "svair-mock"]
-	path = svair-mock
-	url = git@github.com:betagouv/svair-mock.git
