@@ -19,10 +19,9 @@
 
 - hosts: svair_mock:!development
   become: true
-  vars:
-    application_to_deploy: svair-mock
-  roles:
-    - role: deploy
+  tasks:
+    - name: deploying svair-mock
+      script: ./scripts/deploy.sh svair-mock
       tags:
         - svair-mock
 

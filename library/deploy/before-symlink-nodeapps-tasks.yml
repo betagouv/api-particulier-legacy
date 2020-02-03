@@ -1,5 +1,0 @@
----
-- name: Install node_modules
-  npm:
-    ci: true
-    path: "{{ ansistrano_release_path.stdout }}/{{ application_to_deploy }}"

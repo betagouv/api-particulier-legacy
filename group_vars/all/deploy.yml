@@ -1,8 +1,0 @@
-ansistrano_deploy_to: "/opt/apps/{{ application_to_deploy }}"
-ansistrano_deploy_subdirectory: "{{ application_to_deploy }}"
-ansistrano_current_via: "symlink"
-ansistrano_keep_releases: 5
-ansistrano_deploy_via: "git"
-ansistrano_git_repo: https://github.com/betagouv/api-particulier-ansible.git
-ansistrano_before_symlink_tasks_file: "{{ playbook_dir }}/library/deploy/before-symlink-nodeapps-tasks.yml"
-ansistrano_after_symlink_tasks_file: "{{ playbook_dir }}/library/deploy/after-symlink-nodeapps-tasks.yml"
