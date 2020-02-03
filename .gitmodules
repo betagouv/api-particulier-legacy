@@ -1,6 +1,3 @@
-[submodule "api-particulier-auth"]
-	path = api-particulier-auth
-	url = git@github.com:betagouv/api-particulier-auth.git
 [submodule "api-stats-elk"]
 	path = api-stats-elk
 	url = git@github.com:betagouv/api-stats-elk.git
