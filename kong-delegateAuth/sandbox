@@ -1,0 +1,2 @@
+curl -X PATCH http://kong:8001/plugins/2d6e014c-fbbd-48b6-976e-2dce0f737b66 \
+   --data "consumer_id="

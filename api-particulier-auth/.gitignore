@@ -1,0 +1,9 @@
+/node_modules
+/coverage
+*.swp
+*.swo
+*.orig
+isolate*
+
+.idea
+api-particulier-auth.log
