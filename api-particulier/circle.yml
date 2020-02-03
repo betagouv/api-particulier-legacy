@@ -1,0 +1,13 @@
+machine:
+  environment:
+    YARN_VERSION: 0.21.3
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+  node:
+    version: 6
+
+test:
+  pre:
+    - git submodule init
+    - git submodule update --recursive
+  post:
+    - cat ./coverage/lcov.info | coveralls --verbose

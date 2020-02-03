@@ -1,0 +1,30 @@
+<section><h2>Token list</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#tokenList}}
+            <tr>
+                <td>{{name}}</td>
+                <td>{{email}}</td>
+                <td>
+                    {{#if hashed_token}}
+                        <span style="color: #006600; font-size: 1.7em;">&#10004;</span>
+                    {{else}}
+                        <span tt="No token !" style="color: #af202e; font-size: 1.7em;">&#10008;</span>
+                    {{/if}}
+                </td>
+                <td>
+                    <a href="/admin/token/{{_id}}" btn primary>Show</a>
+                </td>
+            </tr>
+        {{/tokenList}}
+        </tbody>
+    </table>
+</section>

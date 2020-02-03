@@ -1,0 +1,52 @@
+<section>
+    <h2>Details of token {{token._id}}</h2>
+
+    <h3>Raw data</h3>
+    <pre><code>{{tokenToString}}</code></pre>
+
+    <h3>Edit data</h3>
+    <form action="/admin/token/{{token._id}}" method="post">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" value="{{token.name}}">
+
+        <label for="email">email</label>
+        <input id="email" name="email" type="text" value="{{token.email}}">
+
+        <label for="signup_id">Signup ID</label>
+        <input id="signup_id" name="signup_id" type="text" value="{{token.signup_id}}">
+
+        <input type="submit" value="Save">
+    </form>
+
+    <h3>Generate new API Key</h3>
+    {{#if token.hashed_token}}
+        <p>You already have an API Key!</p>
+    {{ else }}
+        You do not have an API Key yet. Please click on the button below:
+        <form action="/admin/token/{{token._id}}/generate-new-api-key" method="post">
+            <input
+                    xx
+                    style="
+                    border-color: #681f20;
+                    background: #992e2f;
+                    color: #fff;"
+                    type="submit"
+                    value="Generate new API Key"
+            >
+        </form>
+    {{/if}}
+    {{#if newlyGeneratedApiKey}}
+        <p>
+            Your new API Key is:
+        </p>
+        <pre><code>{{newlyGeneratedApiKey}}</code></pre>
+        <p>
+            Write it down now as it will never be shown again
+        </p>
+    {{/if}}
+
+    <h3>Go to signup contract</h3>
+    <a href="{{signupHost}}/api-particulier/{{token.signup_id}}" btn>
+        See contract
+    </a>
+</section>
