@@ -1,3 +1,0 @@
-[submodule "kong-delegateAuth"]
-	path = kong-delegateAuth
-	url = git@github.com:betagouv/kong-delegateAuth.git
