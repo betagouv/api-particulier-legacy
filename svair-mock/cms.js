@@ -33,17 +33,17 @@ dataImport.data().then((rows) => {
         // Person2
         if (row.declarant2.nomNaissance !== '') {
             let person2 = _.find(identities, {
-                surname: row.declarant1.nomNaissance,
-                name: row.declarant1.prenoms,
-                birthdate: row.declarant1.dob
+                surname: row.declarant2.nomNaissance,
+                name: row.declarant2.prenoms,
+                birthdate: row.declarant2.dob
             });
             if (!person2) {
                 person2 = {
                     id: uuidv4(),
-                    surname: row.declarant1.nomNaissance,
-                    name: row.declarant1.prenoms,
-                    birthname: row.declarant1.nomNaissance,
-                    birthdate: row.declarant1.dob
+                    surname: row.declarant2.nomNaissance,
+                    name: row.declarant2.prenoms,
+                    birthname: row.declarant2.nomNaissance,
+                    birthdate: row.declarant2.dob
                 }
                 identities.push(person2);
             }
@@ -95,7 +95,7 @@ dataImport.data().then((rows) => {
     // Write identities to files
     identities.forEach((identity) => {
         fs.writeFile(
-            `../../svair-mock-data/data/people/${identity.id}_${_.deburr(identity.surname.toLowerCase())}-${_.deburr(identity.name.toLowerCase())}.json`,
+            `../../svair-mock-data/data/people/${identity.id}.json`,
             JSON.stringify(identity),
             () => {}
         );
@@ -104,7 +104,7 @@ dataImport.data().then((rows) => {
     // Write addresses to files
     addresses.forEach((address) => {
         fs.writeFile(
-            `../../svair-mock-data/data/addresses/${address.id}_${address.zipCode.toLowerCase()}-${_.deburr(address.city.toLowerCase())}.json`,
+            `../../svair-mock-data/data/addresses/${address.id}.json`,
             JSON.stringify(address),
             () => {}
         );
