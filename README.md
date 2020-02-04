@@ -18,9 +18,13 @@ French government's API providing providing citizens' individual information.
 
 - `git clone --recursive git@github.com:betagouv/api-particulier-ansible.git`
 - `cd api-particulier-ansible`
-- `make`
+- `make install`
 
 > **Troubleshooting:** The provisioning might fail on the "elasticsearch : set java heap size (min size)" task. If you encounter this problem, just run `make` again.
+
+## Help
+
+`make`
 
 ## Usage
 
@@ -95,37 +99,3 @@ npm start
 ## Global architecture
 
 [![architecture](https://docs.google.com/drawings/d/e/2PACX-1vTZql6aJMbkmMiIxRy89SFPch5K-tTNIXVBv1ElXhpESRp43dSRGALdRi3ZNYsf5JlbukIN70HQv5RQ/pub?w=960&h=720)](https://docs.google.com/drawings/d/1p-v88uBrFbKMBLRKEmsrSeNWprJqnzsy08SBrQx6U4c/edit?usp=sharing)
-
-## Deploy production
-
-### Configure staging instance
-
-First you need to install Python 2.7 on every server. Connect to each server then run:
-
-```bash
-sudo apt install -y python
-```
-
-Do not forget to generate new certificate for this instance (see _Generate new certificate_ section bellow).
-
-Then run the ansible configuration script:
-
-```bash
-ansible-playbook -i inventories/staging/hosts configure.yml
-```
-
-> Note that only the dev whose ssh key is provisioned in the ovh interface can execute this playbook for the first time
-
-### Deploy staging instance
-
-Use the following command to deploy api-particulier, api-particulier-auth & svair-mock:
-
-```bash
-ansible-playbook -i inventories/staging/hosts deploy.yml
-```
-
-Use the following command to deploy <app_name> only (app_name can be one of : api-particulier, api-particulier-auth, svair-mock):
-
-```bash
-ansible-playbook -i inventories/staging/hosts deploy.yml -t <app_name>
-```
