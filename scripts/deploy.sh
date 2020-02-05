@@ -26,11 +26,11 @@ mkdir -p ${APP_PATH}/releases
 
 echo "$(logPrefix) Fetching archive..."
 cd ${APP_PATH}
-curl -f -L https://github.com/betagouv/api-particulier-ansible/archive/${APP_VERSION}.tar.gz --output ${APP_NAME}-${APP_VERSION}.tar.gz
+curl -f -L https://github.com/betagouv/api-particulier/archive/${APP_VERSION}.tar.gz --output ${APP_NAME}-${APP_VERSION}.tar.gz
 
 echo "$(logPrefix) Unpacking..."
-tar -xzf ${APP_NAME}-${APP_VERSION}.tar.gz api-particulier-ansible-master/${APP_NAME}
-mv api-particulier-ansible-${APP_VERSION}/${APP_NAME} ${RELEASES_PATH}
+tar -xzf ${APP_NAME}-${APP_VERSION}.tar.gz api-particulier-master/${APP_NAME}
+mv api-particulier-${APP_VERSION}/${APP_NAME} ${RELEASES_PATH}
 rm ${APP_NAME}-${APP_VERSION}.tar.gz
 
 echo "$(logPrefix) Installing..."

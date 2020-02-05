@@ -16,8 +16,8 @@ French government's API providing providing citizens' individual information.
 
 ### Local installation
 
-- `git clone --recursive git@github.com:betagouv/api-particulier-ansible.git`
-- `cd api-particulier-ansible`
+- `git clone --recursive git@github.com:betagouv/api-particulier.git`
+- `cd api-particulier`
 - `make install`
 
 > **Troubleshooting:** The provisioning might fail on the "elasticsearch : set java heap size (min size)" task. If you encounter this problem, just run `make` again.
