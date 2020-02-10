@@ -2,7 +2,7 @@ import { MongoClient } from 'mongodb';
 
 let mongodbConnection = null;
 
-const url = 'mongodb://localhost:27017';
+const url = `mongodb://${process.env.MONGODB_HOST}:27017`;
 const dbName =
   process.env.NODE_ENV === 'test' ? 'api-particulier-test' : 'api-particulier';
 

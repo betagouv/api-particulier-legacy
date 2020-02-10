@@ -42,8 +42,7 @@ const authenticate = function({
       cookie: {
         path: mountPointPath, // cookie will only be sent to requests under '/api'
         httpOnly: true, // when true, cookie is not accessible from javascript
-        // secure: false, // when true, cookie will only be sent over SSL. use key 'secureProxy' instead if you handle SSL not in your node process
-        secureProxy: true,
+        secureProxy: process.env.SECURE_PROXY === 'true',
       },
     })
   );

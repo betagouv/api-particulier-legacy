@@ -75,7 +75,7 @@ adminRouter.use(
     oauthUserInfoURL: `${process.env.OAUTH_HOST}/oauth/userinfo`,
     clientID: process.env.OAUTH_CLIENT_ID,
     clientSecret: process.env.OAUTH_CLIENT_SECRET,
-    host: `https://${process.env.API_PARTICULIER_SERVER_NAME}`,
+    host: process.env.API_PARTICULIER_SERVER_HOST,
     mountPointPath: '/admin',
     sessionSecret: process.env.SESSION_SECRET,
   })

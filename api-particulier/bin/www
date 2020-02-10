@@ -5,7 +5,7 @@ var nconf = require('../api/lib/utils/nconf')
 var Server = require('../api/server')
 var http = require('http')
 var url = require('url')
-var blocked = require('blocked')
+var blocked = require('blocked-at')
 var throng = require('throng')
 const logging = require('../api/lib/logging')
 
@@ -14,8 +14,9 @@ var NB_WORKERS = nconf.get('nbWorkers')
 throng(NB_WORKERS, function (id) {
   const logger = logging.createLogger(nconf, id)
 
-  blocked(ms => {
-    logger.debug('BLOCKED for %dms!', ms)
+  blocked((time, stack) => {
+    logger.debug('BLOCKED for %dms!', time)
+    logger.debug('Stacktrace', stack)
   })
 
   var mhttp = require('http-measuring-client').create()

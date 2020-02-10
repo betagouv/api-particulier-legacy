@@ -1,13 +1,22 @@
+local typedefs = require "kong.db.schema.typedefs"
+
+
 return {
-  no_consumer = false, -- this plugin is available on APIs as well as on Consumers,
+  name = "key-auth",
   fields = {
-    authorize_scheme = {type = "string", required = true, default = "http"},
-    authorize_host = {type = "string", required = true, default = "localhost"},
-    authorize_path = {type = "string", required = true, default = "/authorize"},
-    skipped_paths = {type = "array", required = false, default = "/api/ping"}
+    {
+      consumer = typedefs.no_consumer
+    },
+    {
+      config = {
+        type = "record",
+        fields = {
+          { authorize_scheme = {type = "string", required = false, default = "http"}, },
+          { authorize_host = {type = "string", required = true, default = "localhost"}, },
+          { authorize_path = {type = "string", required = false, default = "/authorize"}, },
+          { skipped_paths = {type = "array", elements = { type = "string" }, required = false, default = { "/api/ping" }} },
+        },
+      },
+    },
   },
-  self_check = function(schema, plugin_t, dao, is_updating)
-    -- perform any custom verification
-    return true
-  end
 }
