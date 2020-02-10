@@ -1,8 +1,6 @@
 const nconf = require('nconf')
 
-nconf.env({
-  separator: '_'
-}).argv()
+nconf.env().argv()
 nconf.defaults(require('../../../defaults'))
 
 module.exports = nconf
