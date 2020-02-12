@@ -9,7 +9,7 @@ User=root
 Group=root
 
 Environment=PERL_BADLANG=0
-ExecStart=/usr/local/bin/kong start --vv --nginx-conf /etc/kong/nginx_kong.lua
+ExecStart=/usr/local/bin/kong start --vv
 ExecStop=/usr/local/bin/kong stop --vv
 
 Restart=on-failure
