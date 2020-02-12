@@ -39,3 +39,33 @@ services:
       - name: admin
         paths:
           - /admin
+
+plugins:
+{% if ip_restriction is defined %}
+  - name: ip-restriction
+    config:
+      whitelist:
+{% for ip in ip_restriction.whitelist %}
+        - {{ ip }}
+{% endfor %}
+{% endif %}
+  - name: rate-limiting
+    config:
+      policy: local
+      second: 20
+  - name: cors
+    config:
+      origins:
+        - "*"
+      methods:
+        - GET
+      headers:
+        - Accept
+        - Content-Length
+        - Content-Type
+        - X-API-Key
+        - X-User
+      exposed_headers:
+        - X-API-Key
+      credentials: true
+      max_age: 3600
