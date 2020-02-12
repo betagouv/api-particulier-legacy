@@ -1,12 +1,18 @@
 _format_version: "1.1"
 
 services:
+  - name: website
+    url: https://betagouv.github.io/api-particulier-web/
+    routes:
+      - name: home
+        paths:
+          - /
   - name: api-particulier
-    url: http://api-particulier:3004
+    url: http://api-particulier:3004/api
     routes:
       - name: api
         paths:
-          - /
+          - /api
     plugins:
       - name: customAuth
         config:
@@ -20,10 +26,6 @@ services:
   - name: introspect
     url: http://auth:3000/api/auth/authorize
     plugins:
-      - name: customAuth
-        config:
-          authorize_host: auth:3000
-          authorize_path: /api/auth/authorize
       - name: response-transformer
         config:
           remove:
