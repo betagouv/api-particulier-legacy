@@ -13,7 +13,6 @@ vms = {
       :synced_folders =>
         [
           {:host => "./api-particulier-auth", :guest => "/opt/apps/api-particulier-auth/current"},
-          {:host => "./kong-delegateAuth", :guest => "/root/kong-delegateAuth-master"},
         ],
       :services_to_start =>
         [

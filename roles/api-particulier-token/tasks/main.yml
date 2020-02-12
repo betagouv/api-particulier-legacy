@@ -5,6 +5,8 @@
     dest: /opt/apps/api-particulier-auth/current/src/fixtures/tokens.js
 
 - name: Run fixture file
+  environment:
+    MONGODB_HOST: localhost
   shell: node --require babel-polyfill --require babel-register src/fixtures/tokens.js
   args:
     chdir: /opt/apps/api-particulier-auth/current

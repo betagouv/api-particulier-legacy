@@ -1,0 +1,41 @@
+_format_version: "1.1"
+
+services:
+  - name: api-particulier
+    url: https://{{ groups.apps[0] }}:4443
+    routes:
+      - name: api
+        paths:
+          - /
+    plugins:
+      - name: customAuth
+        config:
+          authorize_host: localhost:7000
+          authorize_path: /api/auth/authorize
+          skipped_paths:
+            - /api/ping
+            - /api/impots/ping
+            - /api/caf/ping
+            - /api/etudiant/ping
+  - name: introspect
+    url: http://localhost:7000/api/auth/authorize
+    plugins:
+      - name: customAuth
+        config:
+          authorize_host: localhost:7000
+          authorize_path: /api/auth/authorize
+      - name: response-transformer
+        config:
+          remove:
+            json:
+              - _id
+    routes:
+      - name: introspect
+        paths:
+          - /api/introspect
+  - name: admin
+    url: http://localhost:7000/admin
+    routes:
+      - name: admin
+        paths:
+          - /admin
