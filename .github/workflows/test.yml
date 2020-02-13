@@ -17,6 +17,24 @@ jobs:
         working-directory: ./api-particulier
         env:
           CI: true
+  api-particulier-auth:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Launch MongoDB
+        uses: wbari/start-mongoDB@v0.2
+        with:
+          mongoDBVersion: "4.2"
+      - run: npm ci
+        working-directory: ./api-particulier-auth
+      - run: npm test
+        working-directory: ./api-particulier-auth
+        env:
+          CI: true
   svair-mock:
     runs-on: ubuntu-latest
     steps:
