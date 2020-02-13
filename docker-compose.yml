@@ -50,5 +50,7 @@ services:
     container_name: mongodb
     image: mongo
     restart: always
+    volumes:
+      - ./docker/mongodb/dev-token.js:/docker-entrypoint-initdb.d/dev-token.js
     environment:
       MONGO_INITDB_DATABASE: api-particulier
