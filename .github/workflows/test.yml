@@ -1,9 +1,9 @@
-name: Node.js unit tests
+name: Unit tests
 
 on: [push]
 
 jobs:
-  test-api-particulier:
+  api-particulier:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -15,5 +15,19 @@ jobs:
         working-directory: ./api-particulier
       - run: npm test
         working-directory: ./api-particulier
+        env:
+          CI: true
+  svair-mock:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - run: npm ci
+        working-directory: ./svair-mock
+      - run: npm test
+        working-directory: ./svair-mock
         env:
           CI: true
