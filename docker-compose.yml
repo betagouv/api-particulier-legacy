@@ -54,3 +54,10 @@ services:
       - ./docker/mongodb/dev-token.js:/docker-entrypoint-initdb.d/dev-token.js
     environment:
       MONGO_INITDB_DATABASE: api-particulier
+  integration-test:
+    container_name: integration-test
+    image: "node:lts-alpine"
+    working_dir: /home/node/app
+    volumes:
+      - .:/home/node/app
+    command: "npm run test:e2e"

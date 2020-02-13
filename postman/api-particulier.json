@@ -20,7 +20,7 @@
         }
       ],
       "request": {
-        "url": "http://localhost:8000/api/ping",
+        "url": "http://kong:8000/api/ping",
         "method": "GET"
       }
     },
@@ -40,7 +40,7 @@
         }
       ],
       "request": {
-        "url": "http://localhost:8000/api/impots/ping",
+        "url": "http://kong:8000/api/impots/ping",
         "method": "GET"
       }
     },
@@ -60,7 +60,7 @@
         }
       ],
       "request": {
-        "url": "http://localhost:8000/api/caf/ping",
+        "url": "http://kong:8000/api/caf/ping",
         "method": "GET"
       }
     }

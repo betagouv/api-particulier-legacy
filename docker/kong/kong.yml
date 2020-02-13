@@ -43,14 +43,6 @@ services:
           - /admin
 
 plugins:
-  - name: ip-restriction
-    config:
-      whitelist:
-        - 172.19.0.1
-  - name: rate-limiting
-    config:
-      policy: local
-      second: 20
   - name: cors
     config:
       origins:
