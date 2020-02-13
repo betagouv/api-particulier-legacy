@@ -17,10 +17,6 @@ French government's API providing providing citizens' individual information.
 - `cd api-particulier`
 - `docker-compose up`
 
-## Help
-
-`make`
-
 ## Global architecture
 
 [![architecture](https://docs.google.com/drawings/d/e/2PACX-1vTZql6aJMbkmMiIxRy89SFPch5K-tTNIXVBv1ElXhpESRp43dSRGALdRi3ZNYsf5JlbukIN70HQv5RQ/pub?w=960&h=720)](https://docs.google.com/drawings/d/1p-v88uBrFbKMBLRKEmsrSeNWprJqnzsy08SBrQx6U4c/edit?usp=sharing)
