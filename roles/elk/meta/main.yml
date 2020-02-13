@@ -1,5 +1,0 @@
----
-dependencies:
-  - java
-  - logstash-certificate
-  - elasticsearch
