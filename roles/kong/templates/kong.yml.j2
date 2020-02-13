@@ -14,6 +14,14 @@ services:
         paths:
           - /api
     plugins:
+{% if ip_restriction is defined %}
+      - name: ip-restriction
+        config:
+          whitelist:
+{% for ip in ip_restriction.whitelist %}
+            - {{ ip }}
+{% endfor %}
+{% endif %}
       - name: customAuth
         config:
           authorize_host: localhost:7000
@@ -26,6 +34,14 @@ services:
   - name: introspect
     url: http://localhost:7000/api/auth/authorize
     plugins:
+{% if ip_restriction is defined %}
+      - name: ip-restriction
+        config:
+          whitelist:
+{% for ip in ip_restriction.whitelist %}
+            - {{ ip }}
+{% endfor %}
+{% endif %}
       - name: response-transformer
         config:
           remove:
@@ -37,20 +53,21 @@ services:
           - /api/introspect
   - name: admin
     url: http://localhost:7000/admin
+    plugins:
+{% if ip_restriction is defined %}
+      - name: ip-restriction
+        config:
+          whitelist:
+{% for ip in ip_restriction.whitelist %}
+            - {{ ip }}
+{% endfor %}
+{% endif %}
     routes:
       - name: admin
         paths:
           - /admin
 
 plugins:
-{% if ip_restriction is defined %}
-  - name: ip-restriction
-    config:
-      whitelist:
-{% for ip in ip_restriction.whitelist %}
-        - {{ ip }}
-{% endfor %}
-{% endif %}
   - name: rate-limiting
     config:
       policy: local
