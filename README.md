@@ -15,6 +15,9 @@ French government's API providing providing citizens' individual information.
 
 - `git clone git@github.com:betagouv/api-particulier.git`
 - `cd api-particulier`
+- `docker-compose run api-particulier npm i`
+- `docker-compose run api-particulier-auth npm i`
+- `docker-compose run svair-mock npm i`
 - `docker-compose up`
 
 ## Global architecture
