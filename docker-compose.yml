@@ -3,18 +3,18 @@ services:
   api-particulier:
     container_name: api-particulier
     image: "node:lts-alpine"
-    working_dir: /home/node/app
+    working_dir: /app
     volumes:
-      - ./api-particulier:/home/node/app
+      - ./api-particulier:/app
     env_file:
       - ./api-particulier/.env.dev
-    command: "npm install && npm start"
+    command: "npm start"
   svair-mock:
     container_name: svair-mock
     image: "node:lts-alpine"
-    working_dir: /home/node/app
+    working_dir: /app
     volumes:
-      - ./svair-mock:/home/node/app
+      - ./svair-mock:/app
     environment:
       - PORT=3077
     command: "npm start"
@@ -38,13 +38,13 @@ services:
       - KONG_ADMIN_ACCESS_LOG=/dev/stdout
       - KONG_PROXY_ERROR_LOG=/dev/stderr
       - KONG_ADMIN_ERROR_LOG=/dev/stderr
-  auth:
+  api-particulier-auth:
     container_name: auth
     image: "node:lts-alpine"
-    working_dir: /home/node/app
+    working_dir: /app
     volumes:
-      - ./api-particulier-auth:/home/node/app
-    command: "npm install && npm start"
+      - ./api-particulier-auth:/app
+    command: "npm start"
     env_file: ./api-particulier-auth/.env.dev
   mongodb:
     container_name: mongodb
@@ -57,7 +57,7 @@ services:
   integration-test:
     container_name: integration-test
     image: "node:lts-alpine"
-    working_dir: /home/node/app
+    working_dir: /app
     volumes:
-      - .:/home/node/app
-    command: "npm install && npm run test:e2e"
+      - .:/app
+    command: "npm run test:e2e"
