@@ -1,6 +1,0 @@
-{% for alternate_ip in load_balancing_ips[inventory_hostname] %}
-auto {{main_network_interface}}:{{loop.index0}}
-iface {{main_network_interface}}:{{loop.index0}} inet static
-    address {{alternate_ip}}
-    netmask 255.255.255.255
-{% endfor %}

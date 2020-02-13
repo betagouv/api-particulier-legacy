@@ -1,4 +1,0 @@
-ufw_allowed_port:
-  - 22
-  - 443
-  - 80

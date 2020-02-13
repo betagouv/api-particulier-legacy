@@ -1,8 +1,0 @@
----
-- name: Add users ssh key
-  authorized_key:
-    exclusive: no
-    state: "{{ item.state }}"
-    user: "{{ ansible_user }}"
-    key: "{{ item.public_key }}"
-  with_items: "{{ team_ssh_keys }}"

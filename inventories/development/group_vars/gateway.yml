@@ -1,9 +1,0 @@
-https_accept_unauthorized: True
-oauth_host: https://auth-staging.api.gouv.fr
-oauth_client_id: bed40944dde68fb20fae85e88443a5fd4b163a56425f07247336d120f5be2387b697dd185b212558f1c1190ab7362c9a44c381212793cd65884154e054a541c9
-oauth_client_secret: 21183d08ec721ae762aac78cee514d144fc99605af55f82309f333dc6a5493cf554df80f01a1525e58de1839df424b2032cfd3dd68f4248d031b979be77649eb
-session_secret: eev4Xeuna3japhuew2niah7pheich0Oujee0Eim5Aghaet8wuug6aqu9Deek5fee
-hashed_signup_api_key: "$2a$10$da1u/BrW.iyLMu44qFfHueXYsPVMG6phpC/zU2T53XGnElErnYAyG"
-signup_host: https://signup-development.api.gouv.fr
-kong_user_password: b0NPWz6BG9JevQntq7n6YVIEjqbZE6
-mongodb_host: localhost

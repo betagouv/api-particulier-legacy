@@ -1,3 +1,0 @@
-elk_users:
-  - name: api-particulier
-    password: "{{ elk_user_password }}"

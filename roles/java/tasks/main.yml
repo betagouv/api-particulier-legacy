@@ -1,4 +1,0 @@
----
-- name: Install java package
-  apt: name={{ java_packages }} state=present update_cache=yes
-  tags: java
