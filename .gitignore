@@ -6,3 +6,4 @@ ansible_modules
 *.swp
 *.orig
 .idea/
+node_modules

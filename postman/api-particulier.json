@@ -1,0 +1,68 @@
+{
+  "info": {
+    "name": "API Particulier Postman Collection",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Ping main API",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('expect response to be 200', function () {",
+              "    pm.response.to.be.ok",
+              "})"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "url": "http://localhost:8000/api/ping",
+        "method": "GET"
+      }
+    },
+    {
+      "name": "Ping impôts API",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('expect response to be 200', function () {",
+              "    pm.response.to.be.ok",
+              "})"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "url": "http://localhost:8000/api/impots/ping",
+        "method": "GET"
+      }
+    },
+    {
+      "name": "Ping CAF API",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('expect response to be 200', function () {",
+              "    pm.response.to.be.ok",
+              "})"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "url": "http://localhost:8000/api/caf/ping",
+        "method": "GET"
+      }
+    }
+  ]
+}
