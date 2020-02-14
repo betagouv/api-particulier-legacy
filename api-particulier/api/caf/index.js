@@ -1,12 +1,11 @@
 const express = require('express')
-const Auth = require('../../auth/auth')
 const Controller = require('./caf.controller')
 const format = require('../lib/utils/format')
 const scopeAuthorization = require('../lib/middlewares/scopeAuthorization')
+const authenticationMiddleware = require('../../auth/middleware')
 
 module.exports = function (options) {
   const router = express.Router()
-  const auth = new Auth(options)
   const cafController = new Controller(options)
 
   router.use(cafController.prepare())
@@ -14,7 +13,7 @@ module.exports = function (options) {
   router.get('/ping', cafController.ping, format)
   router.get(
     '/famille',
-    auth.canAccessApi,
+    authenticationMiddleware,
     cafController.famille,
     cafController.authorize,
     scopeAuthorization,
