@@ -38,7 +38,8 @@ function Server (options) {
   app.use(express.static('public'))
   app.use(bodyParser.json())
   var corsOptions = {
-    exposedHeaders: ['Range', 'Content-Range', 'X-Content-Range'],
+    allowedHeaders: ['Accept', 'Content-Length', 'Content-Type', 'X-API-Key', 'X-User'],
+    exposedHeaders: ['Range', 'Content-Range', 'X-Content-Range', 'X-API-Key'],
     credentials: true,
     origin: function (origin, callback) {
       logger.info('using cors origin', origin)
