@@ -2,6 +2,14 @@ const StandardError = require('standard-error')
 const axios = require('axios')
 
 const authenticationMiddleware = async (req, res, next) => {
+  if (process.env.NODE_ENV === 'test' && req.headers['x-user-id']) {
+    req.consumer = {
+      id: req.headers['x-user-id'],
+      name: req.headers['x-user-name'],
+      scopes: req.headers['x-user-scopes'] ? req.headers['x-user-scopes'].split(',') : []
+    }
+    return next()
+  }
   const apiKey = req.header('X-API-Key')
   if (!apiKey) {
     return next(new StandardError('Missing API Key', { code: 401 }))
