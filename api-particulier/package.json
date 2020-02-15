@@ -48,7 +48,7 @@
     "bunyan": "^1.8.12",
     "bunyan-blackhole": "^1.0.1",
     "bunyan-format": "^0.2.1",
-    "cors": "^2.8.3",
+    "cors": "^2.8.5",
     "express": "^4.12.3",
     "express-bunyan-logger": "^1.1.1",
     "http-measuring-client": "^0.3.6",
