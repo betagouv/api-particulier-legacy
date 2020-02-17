@@ -1,5 +1,13 @@
 version: "3.7"
 services:
+  nginx:
+    container_name: nginx
+    image: "nginx"
+    volumes:
+      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./docker/nginx/app.conf:/etc/nginx/sites-enabled/app.conf:ro
+    ports:
+      - "8080:80"
   api-particulier:
     container_name: api-particulier
     image: "node:lts-alpine"
@@ -18,26 +26,6 @@ services:
     environment:
       - PORT=3077
     command: "npm start"
-  kong:
-    container_name: kong
-    build:
-      context: .
-      dockerfile: docker/kong/Dockerfile
-    ports:
-      - "8000:8000"
-      - "8001:8001"
-      - "8443:8443"
-      - "8444:8444"
-    volumes:
-      - ./docker/kong:/usr/local/kong/declarative
-    environment:
-      - KONG_DATABASE=off
-      - KONG_DECLARATIVE_CONFIG=/usr/local/kong/declarative/kong.yml
-      - KONG_PLUGINS=bundled,customAuth
-      - KONG_PROXY_ACCESS_LOG=/dev/stdout
-      - KONG_ADMIN_ACCESS_LOG=/dev/stdout
-      - KONG_PROXY_ERROR_LOG=/dev/stderr
-      - KONG_ADMIN_ERROR_LOG=/dev/stderr
   api-particulier-auth:
     container_name: auth
     image: "node:lts-alpine"
@@ -51,7 +39,7 @@ services:
     image: mongo
     restart: always
     volumes:
-      - ./docker/mongodb/dev-token.js:/docker-entrypoint-initdb.d/dev-token.js
+      - ./docker/mongodb/dev-token.js:/docker-entrypoint-initdb.d/dev-token.js:ro
     environment:
       MONGO_INITDB_DATABASE: api-particulier
   integration-test:

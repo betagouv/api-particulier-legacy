@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "French government's API providing providing citizens' individual information.",
   "scripts": {
-    "test:e2e": "wait-on http-get://kong:8000/api/ping && newman run postman/api-particulier.json"
+    "test:e2e": "wait-on http-get://nginx/api/ping && newman run postman/api-particulier.json"
   },
   "license": "AGPLv3",
   "dependencies": {
