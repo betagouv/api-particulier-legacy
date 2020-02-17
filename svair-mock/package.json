@@ -12,8 +12,8 @@
     "type": "git",
     "url": "git+ssh://git@github.com/sgmap/svair-mock.git"
   },
-  "author": "apiparticulier@sgmap.fr",
-  "license": "Apache-2.0",
+  "author": "contact@particulier.api.gouv.fr",
+  "license": "AGPLv3",
   "bugs": {
     "url": "https://github.com/sgmap/svair-mock/issues"
   },

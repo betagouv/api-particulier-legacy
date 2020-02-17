@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node ./index.js"
   },
-  "author": "betagouv",
+  "author": "contact@particulier.api.gouv.fr",
+  "license": "AGPLv3",
   "devDependencies": {},
   "dependencies": {
     "axios": "^0.19.0",

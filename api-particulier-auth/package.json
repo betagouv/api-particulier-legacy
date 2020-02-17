@@ -15,8 +15,8 @@
     "type": "git",
     "url": "git+https://github.com/betagouv/api-particulier-auth.git"
   },
-  "author": "betagouv",
-  "license": "MIT",
+  "author": "contact@particulier.api.gouv.fr",
+  "license": "AGPLv3",
   "bugs": {
     "url": "https://github.com/betagouv/api-particulier-auth/issues"
   },
