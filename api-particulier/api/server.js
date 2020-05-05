@@ -16,6 +16,8 @@ const loggerProperties = require('./lib/middlewares/logger')
 const formatError = require('./lib/middlewares/formatError')
 const errorScopeAuthorization = require('./lib/middlewares/errorScopeAuthorization')
 
+process.env.UV_THREADPOOL_SIZE = 128
+
 module.exports = Server
 
 function Server (options) {
