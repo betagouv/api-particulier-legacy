@@ -6,6 +6,8 @@ const StandardError = require('standard-error')
 function ImpotController (options) {
   options = options || {}
 
+  options.svairLib = options.svairLib || svair
+
   function sendDataFromSvair (err, result, next, res) {
     if (err && err.message === 'Invalid credentials') {
       next(new StandardError('Les paramètres fournis sont incorrects ou ne correspondent pas à un avis', {code: 404, scope: 'dgfip'}))
@@ -31,7 +33,7 @@ function ImpotController (options) {
     if (!numeroFiscal || !referenceAvis) {
       return next(new StandardError('Les paramètres numeroFiscal et referenceAvis doivent être fournis dans la requête.', {code: 400, scope: 'dgfip'}))
     } else {
-      svair(options.svairHost)(numeroFiscal, referenceAvis, function (err, result) {
+      options.svairLib(options.svairHost)(numeroFiscal, referenceAvis, function (err, result) {
         sendDataFromSvair(err, result, next, res)
       })
     }

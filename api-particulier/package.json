@@ -60,6 +60,7 @@
     "standard-error": "^1.1.0",
     "superagent": "^5.1.0",
     "svair-api": "^0.6.1",
+    "svair-api-next": "https://github.com/betagouv/svair-api.git#2.0.0",
     "throng": "^4.0.0"
   }
 }
