@@ -16,6 +16,10 @@ import {
   getTokenList,
   updateToken,
 } from './admin/controllers';
+import {
+  getUserTokenList,
+  generateNewUserApiKey
+} from './dashboard/controller';
 
 const app = express();
 
@@ -29,13 +33,13 @@ const logger = morgan('combined', {
 app.use(logger);
 
 // Register Handlebars view engine and setup handlebars folders
-app.set('views', path.join(__dirname, 'admin/views'));
+app.set('views', path.join(__dirname, 'views'));
 app.engine(
   'handlebars',
   expressHandlebars({
     defaultLayout: 'main',
-    layoutsDir: path.join(__dirname, 'admin/views/layouts'),
-    partialsDir: path.join(__dirname, 'admin/views/partials'),
+    layoutsDir: path.join(__dirname, 'views/layouts'),
+    partialsDir: path.join(__dirname, 'views/partials'),
   })
 );
 app.set('view engine', 'handlebars');
@@ -94,7 +98,30 @@ adminRouter.post(
 
 adminRouter.use(function(err, req, res, next) {
   console.error(err);
-  res.status(500).render('error', { error: err.toString() });
+  res.status(500).render('admin/error', { error: err.toString() });
+});
+
+// Dashboard router
+const dashboardRouter = express.Router();
+app.use('/dashboard', dashboardRouter);
+dashboardRouter.use(
+  oauthAuthenticate({
+    oauthHost: process.env.OAUTH_HOST,
+    oauthUserInfoURL: `${process.env.OAUTH_HOST}/oauth/userinfo`,
+    clientID: process.env.OAUTH_CLIENT_ID,
+    clientSecret: process.env.OAUTH_CLIENT_SECRET,
+    host: process.env.API_PARTICULIER_SERVER_HOST,
+    mountPointPath: '/dashboard',
+    sessionSecret: process.env.SESSION_SECRET,
+  }) 
+)
+dashboardRouter.use(helmet());
+
+dashboardRouter.get('/', getUserTokenList);
+dashboardRouter.post('/token/:id/generate-new-api-key', generateNewUserApiKey);
+dashboardRouter.use(function(err, req, res, next) {
+  console.error(err);
+  res.status(500).render('admin/error', { error: err.toString(), layout: "dashboard" });
 });
 
 const port = process.env.PORT || '7000';

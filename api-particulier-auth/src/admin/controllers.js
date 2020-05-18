@@ -17,7 +17,7 @@ export const getTokenList = async (req, res, next) => {
       .sort({ created_at: -1 })
       .toArray();
 
-    return res.render('token-list', { tokenList });
+    return res.render('admin/token-list', { tokenList });
   } catch (e) {
     next(e);
   }
@@ -31,7 +31,7 @@ export const getTokenDetail = async (req, res, next) => {
       .collection('tokens')
       .findOne({ _id: ObjectID(req.params.id) });
 
-    return res.render('token-detail', {
+    return res.render('admin/token-detail', {
       token,
       tokenToString: JSON.stringify({ token }, null, 2),
       signupHost,
@@ -59,7 +59,7 @@ export const updateToken = async (req, res, next) => {
         { returnOriginal: false },
       );
 
-    return res.render('token-detail', {
+    return res.render('admin/token-detail', {
       token,
       tokenToString: JSON.stringify(token, null, 2),
       signupHost,
@@ -126,7 +126,7 @@ export const generateNewApiKey = async (req, res, next) => {
         { returnOriginal: false },
       );
 
-    return res.render('token-detail', {
+    return res.render('admin/token-detail', {
       token: newToken,
       tokenToString: JSON.stringify(newToken, null, 2),
       newlyGeneratedApiKey: newApiKey,
