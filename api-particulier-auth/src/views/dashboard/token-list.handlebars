@@ -1,0 +1,41 @@
+<section>
+    <h2>Vos tokens d'accès</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Nom de la démarche</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#tokenList}}
+            <tr>
+                <td>
+                    <a href="{{../signupHost}}/api-particulier/{{signup_id}}">
+                        {{name}}
+                    </a>
+                </td>
+                <td>
+                    {{#if newlyGeneratedApiKey}}
+                    <code>{{newlyGeneratedApiKey}}</code>
+                    <p>
+                        Notez cette clé d'API car elle ne vous sera plus jamais présentée
+                    </p>
+                    {{else}}
+                    {{#if hashed_token}}
+                    <p>Token généré le {{generatedOn}}</p>
+                    {{ else }}
+                    <form action="/dashboard/token/{{_id}}/generate-new-api-key" method="post">
+                        <input xx style="
+                                        border-color: #681f20;
+                                        background: #992e2f;
+                                        color: #fff;" type="submit" value="Récupérer mon token">
+                    </form>
+                    {{/if}}
+                    {{/if}}
+                </td>
+            </tr>
+            {{/tokenList}}
+        </tbody>
+    </table>
+</section>
