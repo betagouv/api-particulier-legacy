@@ -17,7 +17,7 @@ numeral.register('locale', 'fr', {
 });
 numeral.locale('fr');
 
-const formatMoney = amount => numeral(amount).format('0,0 $');
+const formatMoney = amount => amount !== null ? numeral(amount).format('0,0 $') : null;
 
 app.engine('.hbs', exphbs({defaultLayout: 'single', extname: '.hbs'}));
 app.set('view engine', '.hbs');
