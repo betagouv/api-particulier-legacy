@@ -7,7 +7,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: docker-compose run api-particulier npm i
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12"
+      # For some reason, Github Action is not able to install a git-based npm dependency inside docker
+      # The faulty dependency is svair-api, used in two different version to maintain retro-compatibility
+      # Therefore we install the npm dependencies directly in the vm as a workaround
+      - run: npm i
+        working-directory: api-particulier
       - run: docker-compose run api-particulier-auth npm i
       - run: docker-compose run svair-mock npm i
       - run: docker-compose run integration-test npm i
