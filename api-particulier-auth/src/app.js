@@ -18,7 +18,7 @@ import {
 } from './admin/controllers';
 import {
   getUserTokenList,
-  generateNewUserApiKey
+  generateNewUserApiKey,
 } from './dashboard/controller';
 
 const app = express();
@@ -113,15 +113,17 @@ dashboardRouter.use(
     host: process.env.API_PARTICULIER_SERVER_HOST,
     mountPointPath: '/dashboard',
     sessionSecret: process.env.SESSION_SECRET,
-  }) 
-)
+  })
+);
 dashboardRouter.use(helmet());
 
 dashboardRouter.get('/', getUserTokenList);
 dashboardRouter.post('/token/:id/generate-new-api-key', generateNewUserApiKey);
 dashboardRouter.use(function(err, req, res, next) {
   console.error(err);
-  res.status(500).render('admin/error', { error: err.toString(), layout: "dashboard" });
+  res
+    .status(500)
+    .render('admin/error', { error: err.toString(), layout: 'dashboard' });
 });
 
 const port = process.env.PORT || '7000';
