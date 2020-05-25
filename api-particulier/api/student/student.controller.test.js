@@ -1,9 +1,9 @@
 const sinonChai = require('sinon-chai')
+const sinon = require('sinon')
 const chai = require('chai')
 chai.use(sinonChai)
 chai.should()
 const expect = chai.expect
-const StandardError = require('standard-error')
 const StudentController = require('./student.controller')
 const axios = require('axios')
 const MockAdapter = require('axios-mock-adapter')
@@ -30,14 +30,17 @@ describe('Student Controller', () => {
     it('replies 500 on the ping route', done => {
       // given
       var req = {}
-      var res = {}
+      var send = sinon.spy()
+      var res = {
+        status: sinon.stub().returns({
+          send: send
+        })
+      }
 
       // when
-      studentController.ping(req, res, function (err) {
+      studentController.ping(req, res).then(() => {
         // then
-        expect(err).to.deep.equal(
-          new StandardError('Network Error', { code: 503, scope: 'etudiant' })
-        )
+        expect(send).to.have.been.calledWith('boom')
         done()
       })
     })
