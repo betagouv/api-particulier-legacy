@@ -21,16 +21,14 @@ class StudentController {
   async ping (req, res, next) {
     try {
       await axios.get(
-        `${this.baseUrl}/ping`, {timeout: 3000}
+        `${this.baseUrl}/etudiant`, {timeout: 3000}
       )
       return res.send('pong')
     } catch (error) {
-      if (!error.response) {
-        return next(new StandardError(error.message, {code: 503, scope: 'etudiant'}))
+      if (error.response && error.response.status === 400) {
+        return res.send('pong')
       }
-      return next(
-        new StandardError(error.message, { code: 500, scope: 'etudiant' })
-      )
+      return res.status(503).send('boom')
     }
   }
 
@@ -44,15 +42,26 @@ class StudentController {
         )
       )
     }
+    var birthDate = req.query.dateDeNaissance
+    if (!birthDate) {
+      return next(
+        new StandardError(
+          'Le paramètre dateDeNaissance doit être fourni dans la requête.',
+          { code: 400, scope: 'etudiant' }
+        )
+      )
+    }
     try {
       const { data: student } = await axios.get(
-        `${this.baseUrl}/etudiantParIne`,
+        `${this.baseUrl}/etudiant`,
         {
           params: {
-            INE: ine
+            INE: ine,
+            dateNaissance: birthDate
           },
           headers: {
-            'X-API-Key': this.apiKey
+            'X-Api-Key': this.apiKey,
+            'X-Caller': req.consumer.name
           },
           timeout: 3000
         }

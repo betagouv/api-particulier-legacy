@@ -1,13 +1,13 @@
 const serverTest = require('../test/utils/server')
 const axios = require('axios')
 const MockAdapter = require('axios-mock-adapter')
+const {expect} = require('chai')
 
 describe('Etudiant API', function () {
   let mock
   const server = serverTest()
   const api = server.api
   const validIne = 'fakeIne'
-  const invalidIne = 'invalidIne'
   const fakeResponseData = {
     ine: '0102014544Z',
     nomFamille: 'GARCIA',
@@ -48,7 +48,7 @@ describe('Etudiant API', function () {
 
   describe('Ping', () => {
     it('replies a 200', () => {
-      mock.onGet('http://sup.data/api/rest.php/ping').reply(200, 'pong')
+      mock.onGet().reply(200, 'pong')
       return api()
         .get('/api/etudiant/ping')
         .expect(200)
@@ -66,21 +66,17 @@ describe('Etudiant API', function () {
       return api()
         .get('/api/etudiant/ping')
         .expect(503)
-        .expect({
-          error: 'service_unavailable',
-          message: 'timeout of 3000ms exceeded',
-          reason: 'timeout of 3000ms exceeded'
+        .then(res => {
+          expect(res.text).to.equal('boom')
         })
     })
   })
 
   describe('Student search endpoint', () => {
     it('replies a 200 for a valid ine', () => {
-      mock
-        .onGet('http://sup.data/api/rest.php/etudiantParIne')
-        .reply(200, fakeResponseData)
+      mock.onGet().reply(200, fakeResponseData)
       return api()
-        .get(`/api/etudiant?ine=${validIne}`)
+        .get(`/api/etudiant?ine=${validIne}&dateDeNaissance=1990-08-08`)
         .set('Accept', '*/*')
         .set('X-User-Id', 'test')
         .set('X-User-Name', 'test')
@@ -90,9 +86,9 @@ describe('Etudiant API', function () {
     })
 
     it('replies a 404 for an invalid ine', () => {
-      mock.onGet('http://sup.data/api/rest.php/etudiantParIne').reply(404)
+      mock.onGet().reply(404)
       return api()
-        .get(`/api/etudiant?ine=${invalidIne}`)
+        .get(`/api/etudiant?ine=${validIne}&dateDeNaissance=1990-08-08`)
         .set('Accept', '*/*')
         .set('X-User-Id', 'test')
         .set('X-User-Name', 'test')
@@ -102,10 +98,10 @@ describe('Etudiant API', function () {
 
     it('hides the out-of-scope data', () => {
       mock
-        .onGet('http://sup.data/api/rest.php/etudiantParIne')
+        .onGet()
         .reply(200, fakeResponseData)
       return api()
-        .get(`/api/etudiant?ine=${validIne}`)
+        .get(`/api/etudiant?ine=${validIne}&dateDeNaissance=1990-08-08`)
         .set('Accept', '*/*')
         .set('X-User-Id', 'test')
         .set('X-User-Name', 'test')
@@ -115,9 +111,9 @@ describe('Etudiant API', function () {
     })
 
     it('returns a 503 on network error', () => {
-      mock.onGet('http://sup.data/api/rest.php/etudiantParIne').networkError()
+      mock.onGet().networkError()
       return api()
-        .get(`/api/etudiant?ine=${invalidIne}`)
+        .get(`/api/etudiant?ine=${validIne}&dateDeNaissance=1990-08-08`)
         .set('Accept', '*/*')
         .set('X-User-Id', 'test')
         .set('X-User-Name', 'test')
@@ -128,7 +124,7 @@ describe('Etudiant API', function () {
     it('returns a 503 on timeout', () => {
       mock.onGet().timeout()
       return api()
-        .get(`/api/etudiant?ine=${invalidIne}`)
+        .get(`/api/etudiant?ine=${validIne}&dateDeNaissance=1990-08-08`)
         .set('Accept', '*/*')
         .set('X-User-Id', 'test')
         .set('X-User-Name', 'test')

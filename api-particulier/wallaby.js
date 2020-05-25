@@ -1,24 +1,26 @@
-module.exports = function() {
-  return {
-    files: ["**/*", "!**/*.test.js", "!node_modules/**/*"],
+module.exports = function () {
+  process.env.NODE_ENV = 'test'
 
-    tests: ["**/*.test.js", "!node_modules/**/*"],
+  return {
+    files: ['**/*', '!**/*.test.js', '!node_modules/**/*'],
+
+    tests: ['**/*.test.js', '!node_modules/**/*'],
 
     setup: wallaby => {
-      const chai = require("chai");
+      const chai = require('chai')
 
-      chai.use(require("sinon-chai"));
+      chai.use(require('sinon-chai'))
 
-      global.expect = require("chai").expect;
+      global.expect = require('chai').expect
     },
 
-    testFramework: "mocha",
+    testFramework: 'mocha',
 
     env: {
-      type: "node",
-      runner: "node"
+      type: 'node',
+      runner: 'node'
     },
 
     workers: { recycle: true }
-  };
-};
+  }
+}
