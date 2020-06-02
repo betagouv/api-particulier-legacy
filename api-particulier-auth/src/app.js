@@ -76,7 +76,6 @@ app.use('/admin', adminRouter);
 adminRouter.use(
   oauthAuthenticate({
     oauthHost: process.env.OAUTH_HOST,
-    oauthUserInfoURL: `${process.env.OAUTH_HOST}/oauth/userinfo`,
     clientID: process.env.OAUTH_CLIENT_ID,
     clientSecret: process.env.OAUTH_CLIENT_SECRET,
     host: process.env.API_PARTICULIER_SERVER_HOST,
@@ -107,7 +106,6 @@ app.use('/dashboard', dashboardRouter);
 dashboardRouter.use(
   oauthAuthenticate({
     oauthHost: process.env.OAUTH_HOST,
-    oauthUserInfoURL: `${process.env.OAUTH_HOST}/oauth/userinfo`,
     clientID: process.env.OAUTH_CLIENT_ID,
     clientSecret: process.env.OAUTH_CLIENT_SECRET,
     host: process.env.API_PARTICULIER_SERVER_HOST,
