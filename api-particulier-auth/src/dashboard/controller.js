@@ -10,12 +10,12 @@ const signupHost =
   process.env.SIGNUP_HOST || 'https://signup-development.api.gouv.fr';
 
 const formatTokenGenerationDate = tokenList => {
-    tokenList.forEach(token => {
-        if (token.hashed_token) {
-          token.generatedOn = moment(token.api_key_issued_at).format('LL')
-        }
-    });
-}
+  tokenList.forEach(token => {
+    if (token.hashed_token) {
+      token.generatedOn = moment(token.api_key_issued_at).format('LL');
+    }
+  });
+};
 
 export const getUserTokenList = async (req, res, next) => {
   try {
@@ -24,17 +24,18 @@ export const getUserTokenList = async (req, res, next) => {
     const tokenList = await databaseConnection
       .collection('tokens')
       .find({
-          email: req.session.email
+        email: req.session.email,
       })
       .sort({ created_at: -1 })
       .toArray();
-    
+
     formatTokenGenerationDate(tokenList);
 
     return res.render('dashboard/token-list', {
-        tokenList,
-        layout: "dashboard",
-        signupHost
+      tokenList,
+      layout: 'dashboard',
+      signupHost,
+      user: req.session,
     });
   } catch (e) {
     next(e);
@@ -51,13 +52,13 @@ export const generateNewUserApiKey = async (req, res, next) => {
 
     if (token.hashed_token) {
       return next(
-        new Error('You cannot generate a new token if you already have one'),
+        new Error('You cannot generate a new token if you already have one')
       );
     }
 
     if (token.email !== req.session.email) {
       return next(
-        new Error('You cannot generate a new token if you don\'t own it'),
+        new Error("You cannot generate a new token if you don't own it")
       );
     }
 
@@ -75,29 +76,30 @@ export const generateNewUserApiKey = async (req, res, next) => {
             api_key_issued_at: new Date().toISOString(),
           },
         },
-        { returnOriginal: false },
+        { returnOriginal: false }
       );
 
     const tokenList = await databaseConnection
       .collection('tokens')
       .find({
-          email: req.session.email
+        email: req.session.email,
       })
       .sort({ created_at: -1 })
       .toArray();
 
     formatTokenGenerationDate(tokenList);
-    
+
     tokenList.forEach(element => {
-        if (element._id.toString() === req.params.id) {
-            element.newlyGeneratedApiKey = newApiKey;
-        }
+      if (element._id.toString() === req.params.id) {
+        element.newlyGeneratedApiKey = newApiKey;
+      }
     });
 
     return res.render('dashboard/token-list', {
       tokenList,
-      layout: "dashboard",
-      signupHost
+      layout: 'dashboard',
+      signupHost,
+      user: req.session,
     });
   } catch (e) {
     next(e);
