@@ -57,6 +57,23 @@
     "annee",
     "mois"
   ],
+  "cnaf_allocataires": [
+    "allocataires[].nomPrenom",
+    "allocataires[].dateDeNaissance",
+    "allocataires[].sexe"
+  ],
+  "cnaf_enfants": [
+    "enfants[].nomPrenom",
+    "enfants[].dateDeNaissance",
+    "enfants[].sexe"
+  ],
+  "cnaf_adresse": [
+    "adresse.identite",
+    "adresse.complementIdentiteGeo",
+    "adresse.numeroRue",
+    "adresse.codePostalVille",
+    "adresse.pays"
+  ],
   "cnaf_quotient_familial": ["quotientFamilial", "annee", "mois"],
   "mesri_statut_etudiant": [
     "ine",
