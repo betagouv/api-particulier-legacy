@@ -41,22 +41,6 @@
     "erreurCorrectif",
     "situationPartielle"
   ],
-  "cnaf_attestation_droits": [
-    "allocataires[].nomPrenom",
-    "allocataires[].dateDeNaissance",
-    "allocataires[].sexe",
-    "enfants[].nomPrenom",
-    "enfants[].dateDeNaissance",
-    "enfants[].sexe",
-    "adresse.identite",
-    "adresse.complementIdentiteGeo",
-    "adresse.numeroRue",
-    "adresse.codePostalVille",
-    "adresse.pays",
-    "quotientFamilial",
-    "annee",
-    "mois"
-  ],
   "cnaf_allocataires": [
     "allocataires[].nomPrenom",
     "allocataires[].dateDeNaissance",
@@ -74,7 +58,11 @@
     "adresse.codePostalVille",
     "adresse.pays"
   ],
-  "cnaf_quotient_familial": ["quotientFamilial", "annee", "mois"],
+  "cnaf_quotient_familial": [
+    "quotientFamilial",
+    "annee",
+    "mois"
+  ],
   "mesri_statut_etudiant": [
     "ine",
     "nomFamille",

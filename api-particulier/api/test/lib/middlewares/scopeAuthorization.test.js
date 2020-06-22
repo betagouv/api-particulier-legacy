@@ -78,7 +78,7 @@ describe('Middleware : scopeAuthorization', () => {
         _id: 'test',
         name: 'test',
         email: 'test@test.test',
-        scopes: ['cnaf_attestation_droits']
+        scopes: ['cnaf_adresse', 'cnaf_allocataires', 'cnaf_quotient_familial', 'cnaf_enfants']
       }
       const req = {
         consumer: consumer
@@ -127,30 +127,12 @@ describe('Middleware : scopeAuthorization', () => {
       data: cafFamilleResponse
     }
 
-    it('should let pass cnaf_attestation_droits request with dgfip scopes', () => {
+    it("should let pass 'cnaf_adresse', 'cnaf_allocataires', 'cnaf_quotient_familial', 'cnaf_enfants' request with dgfip scopes", () => {
       const consumer = {
         _id: 'test',
         name: 'test',
         email: 'test@test.test',
-        scopes: ['dgfip_avis_imposition', 'dgfip_adresse', 'cnaf_attestation_droits']
-      }
-      const req = {
-        consumer: consumer
-      }
-      const next = sinon.spy()
-
-      middleware(req, res, next)
-
-      expect(next.getCall(0).args.length).to.equal(0)
-      expect(res.data).to.deep.equal(cafFamilleResponse)
-    })
-
-    it('should let pass cnaf_attestation_droits request with cnaf_quotient_familial', () => {
-      const consumer = {
-        _id: 'test',
-        name: 'test',
-        email: 'test@test.test',
-        scopes: ['cnaf_quotient_familial', 'cnaf_attestation_droits']
+        scopes: ['dgfip_avis_imposition', 'dgfip_adresse', 'cnaf_adresse', 'cnaf_allocataires', 'cnaf_quotient_familial', 'cnaf_enfants']
       }
       const req = {
         consumer: consumer
