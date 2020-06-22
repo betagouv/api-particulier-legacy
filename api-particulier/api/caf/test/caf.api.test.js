@@ -1,6 +1,6 @@
 const serverTest = require('./../../test/utils/server')
-const {expect} = require('chai')
-const fakeQuery = {codePostal: '99148', numeroAllocataire: '0000354'}
+const { expect } = require('chai')
+const fakeQuery = { codePostal: '99148', numeroAllocataire: '0000354' }
 const fakeResponse = require('../fake-responses')[0].response
 
 describe('CAF API', function () {
@@ -9,9 +9,7 @@ describe('CAF API', function () {
 
   describe('Ping', () => {
     it('replies a 200', () => {
-      return api()
-        .get('/api/caf/ping')
-        .expect(200)
+      return api().get('/api/caf/ping').expect(200)
     })
   })
 
@@ -27,7 +25,8 @@ describe('CAF API', function () {
           .expect(403)
       })
 
-      describe('with cnaf_attestation_droits scope', () => {
+      describe('with cnaf scopes scope', () => {
+        const cnafScopes = 'cnaf_quotient_familial,cnaf_adresse,cnaf_allocataires,cnaf_enfants'
         describe('Without query parameters', () => {
           it('replies a 400', () => {
             return api()
@@ -35,7 +34,7 @@ describe('CAF API', function () {
               .set('Accept', '*/*')
               .set('X-User-Id', 'test')
               .set('X-User-Name', 'test')
-              .set('X-User-Scopes', 'cnaf_attestation_droits')
+              .set('X-User-Scopes', cnafScopes)
               .expect(400)
           })
         })
@@ -47,7 +46,7 @@ describe('CAF API', function () {
               .set('Accept', '*/*')
               .set('X-User-Id', 'test')
               .set('X-User-Name', 'test')
-              .set('X-User-Scopes', 'cnaf_attestation_droits')
+              .set('X-User-Scopes', cnafScopes)
               .query(fakeQuery)
               .expect(200)
           })
@@ -58,7 +57,7 @@ describe('CAF API', function () {
               .set('Accept', '*/*')
               .set('X-User-Id', 'test')
               .set('X-User-Name', 'test')
-              .set('X-User-Scopes', 'cnaf_attestation_droits')
+              .set('X-User-Scopes', cnafScopes)
               .query(fakeQuery)
               .then((res) => {
                 expect(res.body).to.deep.equal(fakeResponse)
@@ -71,7 +70,7 @@ describe('CAF API', function () {
               .set('Accept', 'application/xml')
               .set('X-User-Id', 'test')
               .set('X-User-Name', 'test')
-              .set('X-User-Scopes', 'cnaf_attestation_droits')
+              .set('X-User-Scopes', cnafScopes)
               .query(fakeQuery)
               .expect('content-type', /xml/)
           })
