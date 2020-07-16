@@ -1,5 +1,6 @@
 const StandardError = require('standard-error')
 const axios = require('axios')
+const { signatureMatches } = require('../api/lib/utils/security')
 
 const authenticationMiddleware = async (req, res, next) => {
   if (process.env.NODE_ENV === 'test' && req.headers['x-user-id']) {
@@ -10,6 +11,25 @@ const authenticationMiddleware = async (req, res, next) => {
     }
     return next()
   }
+
+  if (req.headers['x-gravitee-signature'] && req.headers['x-application-id'] && req.headers['x-application-name'] && req.headers['x-application-scopes']) {
+    // Request may come from gravitee, let's check the signature
+    const signature = req.headers['x-gravitee-signature']
+    const applicationId = req.headers['x-application-id']
+    const applicationName = req.headers['x-application-name']
+    const scopes = req.headers['x-application-scopes'].split(',')
+
+    if (!signatureMatches(applicationId, signature)) {
+      return next(new StandardError('Bad signature', { code: 401 }))
+    }
+    req.consumer = {
+      id: applicationId,
+      name: applicationName,
+      scopes
+    }
+    return next()
+  }
+
   const apiKey = req.header('X-API-Key')
   if (!apiKey) {
     return next(new StandardError('Missing API Key', { code: 401 }))
