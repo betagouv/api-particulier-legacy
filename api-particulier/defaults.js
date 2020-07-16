@@ -24,5 +24,6 @@ module.exports = {
     dsn: ''
   },
   tokensPath: './tokens',
-  logginPath: '/var/log/api-particulier/api-particulier.log'
+  logginPath: '/var/log/api-particulier/api-particulier.log',
+  graviteeKey: 'yolo'
 }
