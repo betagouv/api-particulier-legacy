@@ -1276,5 +1276,145 @@
       "mois": 10,
       "annee": 2020
     }
+  },
+  {
+    "numeroAllocataire": "8888017",
+    "codePostal": "75107",
+    "response": {
+      "allocataires": [
+        {
+          "nomPrenom": "ANGELA CLAIRE LOUISE DUBOIS",
+          "dateDeNaissance": "24081962",
+          "sexe": "F"
+        },
+        {
+          "nomPrenom": "PHILIPPE DUBOIS",
+          "dateDeNaissance": "17021961",
+          "sexe": "M"
+        }
+      ],
+      "enfants": [
+        {
+          "nomPrenom": "SYLVIE DUBOIS",
+          "dateDeNaissance": "05081983",
+          "sexe": "F"
+        },
+        {
+          "nomPrenom": "CHRISTOPHE DUBOIS",
+          "dateDeNaissance": "25061985",
+          "sexe": "M"
+        }
+      ],
+      "adresse": {
+        "identite": "Mme DUBOIS Angela Claire Louise",
+        "complementIdentiteGeo": "",
+        "numeroRue": "20 avenue de Ségur",
+        "codePostalVille": "75107 PARIS",
+        "pays": "FRANCE"
+      },
+      "quotientFamilial": 34750,
+      "mois": 7,
+      "annee": 2020
+    }
+  },
+  {
+    "numeroAllocataire": "8888018",
+    "codePostal": "75107",
+    "response": {
+      "allocataires": [
+        {
+          "nomPrenom": "JEAN PHILIPPE ARNAUD DUBIGNOT",
+          "dateDeNaissance": "15061943",
+          "sexe": "M"
+        }
+      ],
+      "enfants": [
+        {
+          "nomPrenom": "VALENTIN DUBIGNOT",
+          "dateDeNaissance": "05081983",
+          "sexe": "M"
+        }
+      ],
+      "adresse": {
+        "identite": "Mr DUBIGNOT Jean Philippe",
+        "complementIdentiteGeo": "",
+        "numeroRue": "20 avenue de Ségur",
+        "codePostalVille": "75107 PARIS",
+        "pays": "FRANCE"
+      },
+      "quotientFamilial": 29880,
+      "mois": 7,
+      "annee": 2020
+    }
+  },
+  {
+    "numeroAllocataire": "8888019",
+    "codePostal": "75107",
+    "response": {
+      "allocataires": [
+        {
+          "nomPrenom": "JOELLE FRANCOISE DUBINORE",
+          "dateDeNaissance": "15081992",
+          "sexe": "F"
+        },
+        {
+          "nomPrenom": "EMMANUEL ALEXANDRE NICOLAS DELALALALANDE",
+          "dateDeNaissance": "07011991",
+          "sexe": "M"
+        }
+      ],
+      "enfants": [
+        {
+          "nomPrenom": "BENOIT DELALALALANDE",
+          "dateDeNaissance": "04042013",
+          "sexe": "M"
+        }
+      ],
+      "adresse": {
+        "identite": "Mme DUBINORE Joelle Françoise",
+        "complementIdentiteGeo": "",
+        "numeroRue": "109  rue La Boétie",
+        "codePostalVille": "75107 PARIS",
+        "pays": "FRANCE"
+      },
+      "quotientFamilial": 34990,
+      "mois": 7,
+      "annee": 2020
+    }
+  },
+  {
+    "numeroAllocataire": "8888020",
+    "codePostal": "75107",
+    "response": {
+      "allocataires": [
+        {
+          "nomPrenom": "EMMANUEL ALEXANDRE NICOLAS DELALALALANDE",
+          "dateDeNaissance": "07011991",
+          "sexe": "M"
+        },
+        {
+          "nomPrenom": "JOELLE FRANCOISE DUBINORE",
+          "dateDeNaissance": "15081992",
+          "sexe": "F"
+        }
+      ],
+      "enfants": [
+        {
+          "nomPrenom": "BENOIT DELALALALANDE",
+          "dateDeNaissance": "04042013",
+          "sexe": "M"
+        }
+      ],
+      "adresse": {
+        "identite": "Mr DELALALALANDE Emmanuel Alexandre Nicolas",
+        "complementIdentiteGeo": "",
+        "numeroRue": "109  rue La Boétie",
+        "codePostalVille": "75107 PARIS",
+        "pays": "FRANCE"
+      },
+      "quotientFamilial": 34990,
+      "mois": 7,
+      "annee": 2020
+    }
   }
 ]
