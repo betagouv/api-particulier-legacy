@@ -1415,5 +1415,73 @@
       "quotientFamilial": 34990,
       "annee": 2020
     }
+  },
+  {
+    "numeroAllocataire": "5843972",
+    "codePostal": "92110",
+    "response": {
+      "allocataires": [
+        {
+          "nomPrenom": "ERIC SNOW",
+          "dateDeNaissance": "07011991",
+          "sexe": "M"
+        },
+        {
+          "nomPrenom": "SANSA SNOW",
+          "dateDeNaissance": "15081992",
+          "sexe": "F"
+        }
+      ],
+      "enfants": [
+        {
+          "nomPrenom": "PAUL SNOW",
+          "dateDeNaissance": "04042018",
+          "sexe": "M"
+        }
+      ],
+      "adresse": {
+        "identite": "Mr SNOW Eric",
+        "complementIdentiteGeo": "",
+        "numeroRue": "109  rue La Boétie",
+        "codePostalVille": "92110 Clichy",
+        "pays": "FRANCE"
+      },
+      "quotientFamilial": 1856,
+      "annee": 2020
+    }
+  },
+  {
+    "numeroAllocataire": "7846951",
+    "codePostal": "92500",
+    "response": {
+      "allocataires": [
+        {
+          "nomPrenom": "PIERRE DUPONT",
+          "dateDeNaissance": "07011991",
+          "sexe": "M"
+        },
+        {
+          "nomPrenom": "PIERRETTE DIPONT",
+          "dateDeNaissance": "15081992",
+          "sexe": "F"
+        }
+      ],
+      "enfants": [
+        {
+          "nomPrenom": "LOUIS DUPONT",
+          "dateDeNaissance": "04042018",
+          "sexe": "M"
+        }
+      ],
+      "adresse": {
+        "identite": "Mr DUPONT Pierre",
+        "complementIdentiteGeo": "",
+        "numeroRue": "110 rue du Rond Point",
+        "codePostalVille": "92500 Rueil-Malmaison",
+        "pays": "FRANCE"
+      },
+      "quotientFamilial": 2641,
+      "annee": 2020
+    }
   }
 ]
