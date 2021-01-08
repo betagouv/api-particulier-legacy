@@ -7,3 +7,4 @@ ansible_modules
 *.orig
 .idea/
 node_modules
+.env
