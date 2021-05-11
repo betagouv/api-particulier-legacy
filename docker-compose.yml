@@ -1,51 +1,53 @@
 version: "3.7"
 services:
-  nginx:
-    container_name: nginx
-    image: "nginx"
-    volumes:
-      - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./docker/nginx/app.conf:/etc/nginx/sites-enabled/app.conf:ro
-    ports:
-      - "8080:80"
-  api-particulier:
-    container_name: api-particulier
-    image: "node:lts-alpine"
-    working_dir: /app
-    volumes:
-      - ./api-particulier:/app
-    env_file:
-      - ./api-particulier/.env.dev
-    command: "npm start"
-  svair-mock:
-    container_name: svair-mock
-    image: "node:lts-alpine"
-    working_dir: /app
-    volumes:
-      - ./svair-mock:/app
-    environment:
-      - PORT=3077
-    command: "npm start"
-  api-particulier-auth:
-    container_name: auth
-    image: "node:lts-alpine"
-    working_dir: /app
-    volumes:
-      - ./api-particulier-auth:/app
-    command: "npm start"
-    env_file: ./api-particulier-auth/.env.dev
-  mongodb:
-    container_name: mongodb
-    image: mongo
-    restart: always
-    volumes:
-      - ./docker/mongodb/dev-token.js:/docker-entrypoint-initdb.d/dev-token.js:ro
-    environment:
-      MONGO_INITDB_DATABASE: api-particulier
-  integration-test:
-    container_name: integration-test
-    image: "node:lts-alpine"
-    working_dir: /app
-    volumes:
-      - .:/app
-    command: "npm run test:e2e"
+    nginx:
+        container_name: nginx
+        image: "nginx"
+        volumes:
+            - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+            - ./docker/nginx/app.conf:/etc/nginx/sites-enabled/app.conf:ro
+        ports:
+            - "8080:80"
+    api-particulier:
+        container_name: api-particulier
+        image: "node:lts-alpine"
+        working_dir: /app
+        volumes:
+            - ./api-particulier:/app
+        env_file:
+            - ./api-particulier/.env.dev
+        command: "npm start"
+    svair-mock:
+        container_name: svair-mock
+        image: "node:lts-alpine"
+        working_dir: /app
+        volumes:
+            - ./svair-mock:/app
+        environment:
+            - PORT=3077
+            - AIRTABLE_API_KEY=${AIRTABLE_API_KEY}
+            - AIRTABLE_API_URL=${AIRTABLE_API_URL}
+        command: "npm start"
+    api-particulier-auth:
+        container_name: auth
+        image: "node:lts-alpine"
+        working_dir: /app
+        volumes:
+            - ./api-particulier-auth:/app
+        command: "npm start"
+        env_file: ./api-particulier-auth/.env.dev
+    mongodb:
+        container_name: mongodb
+        image: mongo
+        restart: always
+        volumes:
+            - ./docker/mongodb/dev-token.js:/docker-entrypoint-initdb.d/dev-token.js:ro
+        environment:
+            MONGO_INITDB_DATABASE: api-particulier
+    integration-test:
+        container_name: integration-test
+        image: "node:lts-alpine"
+        working_dir: /app
+        volumes:
+            - .:/app
+        command: "npm run test:e2e"
