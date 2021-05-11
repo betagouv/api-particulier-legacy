@@ -2,6 +2,10 @@ name: Tests
 
 on: [push]
 
+env:
+  AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+  AIRTABLE_API_URL: ${{ secrets.AIRTABLE_API_URL }}
+
 jobs:
   api:
     runs-on: ubuntu-latest
@@ -20,9 +24,6 @@ jobs:
       - run: docker-compose run integration-test npm i
       - name: Build and test the docker stack
         run: docker-compose up --exit-code-from integration-test
-        env:
-          AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
-          AIRTABLE_API_URL: ${{ secrets.AIRTABLE_API_URL }}
   api-particulier:
     runs-on: ubuntu-latest
     steps:
