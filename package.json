@@ -7,7 +7,7 @@
   },
   "license": "AGPLv3",
   "dependencies": {
-    "newman": "^5.0.0",
+    "newman": "^5.2.3",
     "wait-on": "^4.0.0"
   }
 }
