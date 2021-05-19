@@ -1,8 +1,9 @@
 const { ping, injectClient } = require('api-caf/lib/components')
 const StandardError = require('standard-error')
 const defaultfakeResponses = require('./fake-responses')
+const defaultfakeResponsesBM = require('./fake-responses-BM')
 const antsFakeResponses = require('./data/ants-fake-response')
-const fakeResponses = defaultfakeResponses.concat(antsFakeResponses)
+const fakeResponses = defaultfakeResponses.concat(defaultfakeResponsesBM).concat(antsFakeResponses)
 const { ClientError } = require('api-caf/lib/client')
 const fs = require('fs')
 
