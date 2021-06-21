@@ -1,4 +1,76 @@
 {
+  "dgfip_declarant1_nom": [
+    "declarant1.nom"
+  ],
+  "dgfip_declarant1_nom_naissance": [
+    "declarant1.nomNaissance"
+  ],
+  "dgfip_declarant1_prenoms": [
+    "declarant1.prenoms"
+  ],
+  "dgfip_declarant1_date_naissance": [
+    "declarant1.dateNaissance"
+  ],
+  "dgfip_declarant2_nom": [
+    "declarant2.nom"
+  ],
+  "dgfip_declarant2_nom_naissance": [
+    "declarant2.nomNaissance"
+  ],
+  "dgfip_declarant2_prenoms": [
+    "declarant2.prenoms"
+  ],
+  "dgfip_declarant2_date_naissance": [
+    "declarant2.dateNaissance"
+  ],
+  "dgfip_date_recouvrement": [
+    "dateRecouvrement"
+  ],
+  "dgfip_date_etablissement": [
+    "dateEtablissement"
+  ],
+  "dgfip_adresse_fiscale_taxation": [
+    "foyerFiscal.adresse"
+  ],
+  "dgfip_adresse_fiscale_annee": [
+    "foyerFiscal.annee"
+  ],
+  "dgfip_nombre_parts": [
+    "nombreParts"
+  ],
+  "dgfip_nombre_personnes_a_charge": [
+    "nombrePersonnesCharge"
+  ],
+  "dgfip_situation_familiale": [
+    "situationFamille"
+  ],
+  "dgfip_revenu_brut_global": [
+    "revenuBrutGlobal"
+  ],
+  "dgfip_revenu_imposable": [
+    "revenuImposable"
+  ],
+  "dgfip_impot_revenu_net_avant_corrections": [
+    "impotRevenuNetAvantCorrections"
+  ],
+  "dgfip_montant_impot": [
+    "montantImpot"
+  ],
+  "dgfip_revenu_fiscal_reference": [
+    "revenuFiscalReference"
+  ],
+  "dgfip_annee_impot": [
+    "anneeImpots"
+  ],
+  "dgfip_annee_revenus": [
+    "anneeRevenus"
+  ],
+  "dgfip_erreur_correctif": [
+    "erreurCorrectif"
+  ],
+  "dgfip_situation_partielle": [
+    "situationPartielle"
+  ],
   "dgfip_avis_imposition": [
     "declarant1.nom",
     "declarant1.nomNaissance",
