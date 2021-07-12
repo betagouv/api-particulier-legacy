@@ -36,7 +36,7 @@ const formatMoney = (amount) =>
   amount !== null ? numeral(amount).format("0,0 $") : null;
 
 const formatDate = (date) =>
-  date !== null || date !== undefined || date !== ""
+  date !== null && date !== undefined && date !== ""
     ? moment(date).format("DD/MM/YYYY")
     : null;
 
